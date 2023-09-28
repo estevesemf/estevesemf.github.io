@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Galo's Clock</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/cwdc/mainPage/LCG.css" />
+        <style>
+            :root {
+                --cgrena: #696969;
+                --cgreen: #446127;
+                --corange: orange;
+                --cwhite: white;
+                --cwhite1: white;
+                --cwhite2: white;
+                --cwhite3: #000000;
+            }
+            body {
+                margin: 20px;
+            }
+            #clock,
+            #handles {
+                border: 5px solid #8b2439;
+                padding: 10px;
+                margin: 0px;
+            }
+            #galo {
+                width: 512px;
+                font-family: cursive;
+                text-align: center;
+                font-size: 30px;
+            }
+            #container {
+                position: relative;
+                height: 352px;
+                margin: 0px;
+                margin-bottom: 30px;
+            }
+            canvas {
+                position: absolute;
+            }
+            #handles {
+                z-index: 2;
+            }
+            #clock {
+                background: url("./flag2.jpg");
+                background-size: 512px 512px;
+                background-size: cover;
+                z-index: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <p id="galo">
+            <a href="https://atletico.com.br/"
+                >Clube Atlético Mineiro</a
+            >
+            <sub style="font-size: small">
+                <a href="/cg/downloads/PDFs/04_LCG_Window-Viewport.pdf">[1]</a>
+                <a href="/python/laboratorios2.html#8c">[2]</a>
+                <a
+                    href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+                    >[3]</a
+                >
+            </sub>
+        </p>
+
+        <div id="container">
+            <canvas id="clock" width="503" height="352">
+                Please upgrade your browser.
+            </canvas>
+            <canvas id="handles" width="503" height="352">
+                Please upgrade your browser.
+            </canvas>
+        </div>
+
+        <br />
+        <p>
+            <audio title="Hino do Atlético Mineiro" controls loop>
+                <source src="hino-aletico-mineiro.mp3" type="audio/mpeg" />
+                Please upgrade your browser!
+            </audio>
+
+            <small>
+                Clube Atlético Mineiro Anthem by
+                <a
+                    href="https://pt.wikipedia.org/wiki/Jadir_Ambr%C3%B3sio"
+                    >Jadir Ambrosio.</a
+                >
+            </small>
+        </p>
+        <p>
+            <iframe
+                title="Reinaldo Goals - 1980"
+                width="320"
+                height="240"
+                src="https://www.youtube.com/embed/eiJ_rBmyMy4?si=X5vxYN-smp-btsdh"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+            >
+            </iframe>
+            <br />
+            <small id="Reinaldo">
+                Reinaldo Goal
+                <a href="https://www.youtube.com/watch?v=eiJ_rBmyMy4">
+                    01/06/1980
+                </a>
+            </small>
+            <br />
+            <small id="Guilherme">
+                Guilerme vs Cobreloa
+                <a href="https://www.youtube.com/watch?v=80UU1avsP38">
+                    05/04/2000
+                </a>
+            </small>
+            <br />
+            <small id="Hulk">
+                Hulk Final vs CAP
+                <a href="https://www.youtube.com/watch?v=LTl0julal28">
+                    15/12/2021
+                </a>
+            </small>
+        </p>
+
+        <script src="suncalc.js"></script>
+        <script src="clock.js"></script>
+        <script src="date.js"></script>
+
+        <script>
+            document.querySelector("#Reinaldo").innerHTML += `(${elapsedYears(
+                "1980-06-01"
+            )} years ago)`;
+            document.querySelector("#Guilherme").innerHTML += `(${elapsedYears(
+                "2000-04-05"
+            )} years ago)`;
+            document.querySelector("#Hulk").innerHTML += `(${elapsedYears(
+                "2021-12-15"
+            )} years ago)`;
+        </script>
+    </body>
+</html>
