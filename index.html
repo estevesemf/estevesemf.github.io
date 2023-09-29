@@ -3,16 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site com Links para Arquivos HTML</title>
+    <title>Links: </title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: bold;
+            border: 1px solid #fff; 
+            padding: 5px 10px; 
+            display: inline-block; 
+        }
+
+        a:hover {
+            color: #999;
+        }
+
+        .navbar {
+            background-color: #f8dffa; 
+            padding: 10px 0; 
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #000; 
+            text-decoration: none;
+            margin: 0 15px; 
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .navbar a:hover {
+            color: #999; 
+        }
+        h1, p, ul, li {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo ao Meu Site</h1>
-    <p>Links :</p>
+    <div class="navbar">
+        <a href="nba/Curry.html">Stephen Curry</a>
+        <a href="clock/11.5.html">Relógio 1</a>
+        <a href="clock/11.5.eng.html">Relógio 2</a>
+    </div>
+    <h1>Bem-vindo </h1>
+    <p>Links:</p>
 
     <ul>
-        <li><a href="nba/Curry.html">Stephen Curry </a></li>
-        <li><a href="clock/11.5.html">Relógio 1</a></li>
-        <li><a href="clock/11.5.eng.html">Relógio 2</a></li>
+        <li>
+            <a href="nba/Curry.html">Página de Stephen Curry</a>
+        </li>
+        <li>
+            <a href="clock/11.5.html">Relógio 1</a>
+        </li>
+        <li>
+            <a href="clock/11.5.eng.html">Relógio 2</a>
+        </li>
     </ul>
 </body>
 </html>
