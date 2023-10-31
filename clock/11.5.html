@@ -1,140 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Galo's Clock</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/cwdc/mainPage/LCG.css" />
-        <style>
-            :root {
-                --cgrena: #8b2439;
-                --cgreen: #446127;
-                --corange: orange;
-                --cwhite: white;
-                --cwhite1: #8b2439;
-                --cwhite2: #446127;
-                --cwhite3: #446127;
-            }
-            body {
-                margin: 20px;
-            }
-            #clock,
-            #handles {
-                border: 5px solid #8b2439;
-                padding: 20px;
-                margin: 0px;
-            }
-            #galo {
-                width: 512px;
-                font-family: cursive;
-                text-align: center;
-                font-size: 30px;
-            }
-            #container {
-                position: relative;
-                height: 512px;
-                margin: 0px;
-                margin-bottom: 50px;
-            }
-            canvas {
-                position: absolute;
-            }
-            #handles {
-                z-index: 2;
-            }
-            #clock {
-                background-color: antiquewhite;
-                z-index: 1;
-            }
-        </style>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="relogio.css" />
+        <script src="../main.js"></script>
     </head>
-
     <body>
-        <p id="galo">
-            <a href="https://atletico.com.br/"
-                >Clube Atlético Mineiro</a
-            >
-            <sub style="font-size: small">
-                <a href="/cg/downloads/PDFs/04_LCG_Window-Viewport.pdf">[1]</a>
-                <a href="/python/laboratorios2.html#8c">[2]</a>
-                <a
-                    href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
-                >
-                    [3]
-                </a>
-            </sub>
-        </p>
+        <div w3-include-html="navbar.html"></div>
 
-        <div id="container">
-            <canvas id="clock" width="512" height="512">
-                Please upgrade your browser.
-            </canvas>
-            <canvas id="handles" width="512" height="512">
-                Please upgrade your browser.
-            </canvas>
-        </div>
-        <br />
-        <p>
-            <audio title="Hino do Atlético Mineiro" controls loop>
-                <source src="hino-aletico-mineiro.mp3" type="audio/mpeg" />
-                Please upgrade your browser!
-            </audio>
+        <div class="wrap-content ms-1">
+            <div id="galo" class="mb-2">
+                <a href="https://www.atletico.com.br">
+                    Clube Atletico Mineiro
+            </div>
 
-            <small>
-                Clube Atlético Mineiro Anthem by
+            <div class="position-relative mb-4" style="height: 512px">
+                <canvas id="clock" width="480" height="480">
+                    Please upgrade your browser.
+                </canvas>
+                <canvas id="handles" width="480" height="480">
+                    Please upgrade your browser.
+                </canvas>
+                <canvas id="legend" width="512" height="512">
+                    Please upgrade your browser.
+                </canvas>
+            </div>
+
+            <div
+                id="address"
+                class="mb-4"
+                style="width: 512px; text-align: center"
+            ></div>
+
+            <div class="m-4" style="font-size: 100%">
+                <audio id="player" title="Hino do Atletico" controls loop>
+                    <source src="hino-atletico-mineiro.mp3" type="audio/mpeg" />
+                    Please upgrade your browser!
+                </audio>
+
+                <button onclick="nextLocation()">+</button>
+                <label class="mx-3"><b>Time Zone</b></label>
+                <button onclick="previousLocation()">-</button>
+            </div>
+
+            <div class="my-4" style="font-size: small">
+                Hino do Galo
                 <a
                     href="https://pt.wikipedia.org/wiki/Jadir_Ambr%C3%B3sio"
                     >Jadir Ambrosio.</a
                 >
-            </small>
-        </p>
-        <p>
-            <iframe
-                title="Reinaldo Goals - 1980"
-                width="320"
-                height="240"
-                src="https://www.youtube.com/embed/eiJ_rBmyMy4?si=X5vxYN-smp-btsdh"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-            >
-            </iframe>
-            <br />
-            <small id="Reinaldo">
-                Reinaldo Goal
-                <a href="https://www.youtube.com/watch?v=eiJ_rBmyMy4">
-                    01/06/1980
-                </a>
-            </small>
-            <br />
-            <small id="Guilherme">
-                Guilerme vs Cobreloa
-                <a href="https://www.youtube.com/watch?v=80UU1avsP38">
-                    05/04/2000
-                </a>
-            </small>
-            <br />
-            <small id="Hulk">
-                Hulk Final vs CAP
-                <a href="https://www.youtube.com/watch?v=LTl0julal28">
-                    15/12/2021
-                </a>
-            </small>
-        </p>
+                (1969).
+            </div>
+        </div>
 
+        <script>
+            includeHTML();
+        </script>
         <script src="suncalc.js"></script>
         <script src="clock.js"></script>
         <script src="date.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+        <script src="../LCG.js"></script>
         <script>
-            document.querySelector(
-                "#Reinaldo"
-            ).innerHTML += `(há ${elapsedYears("1980-06-01")} anos atrás)`;
-            document.querySelector("#Guilherme").innerHTML += `(há ${elapsedYears(
-                "2000-04-05"
-            )} anos atrás)`;
-            document.querySelector("#Hulk").innerHTML += `(há ${elapsedYears(
-                "2021-12-15"
-            )} anos atrás)`;
+            dragAndSave(".wrap-content");
         </script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
     </body>
 </html>

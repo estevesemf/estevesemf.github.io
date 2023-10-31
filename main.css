@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #f8dffa; 
+    padding: 10px 0; 
+}
+
+.navbar a {
+    color: #000; 
+    text-decoration: none;
+    margin: 0 15px; 
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.navbar a:hover {
+    color: #999; 
+}
