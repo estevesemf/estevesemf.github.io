@@ -1,0 +1,36 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #334466;
+  font-color: #000;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.statmuse-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.statmuse-header {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.statmuse-row {
+  font-size: 16px;
+}
+
+.statmuse-cell {
+  text-align: center;
+}
