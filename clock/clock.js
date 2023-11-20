@@ -64,7 +64,6 @@
  * @var {HTMLElement} canvas HTML Canvas.
  */
 var canvas = document.getElementById("clock");
-
 /**
  * @var {Boolean} _USE_LOCAL_TIME_ sets the use of local time.
  */
@@ -296,7 +295,7 @@ function arc(center, radius, t1, t2, fill = true, reflect = false) {
  * @returns {Promise<Array<tz>>} array of time zones.
  */
 function readZones() {
-  const requestURL = `${location.protocol}/cwdc/10-html5css3/clock/localtime.json`;
+  const requestURL = `${location.protocol}/clock/localtime.json`;
 
   return fetch(requestURL).then((response) => {
     return response
