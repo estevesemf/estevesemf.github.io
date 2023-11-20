@@ -9,12 +9,12 @@ th, td {
 }
 
 th {
-  background-color: #3366ff;
+  background-color: #5555ff;
   font-color: #000;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #bfbfcf;
 }
 
 .statmuse-table {
