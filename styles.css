@@ -267,15 +267,13 @@ textarea {
   transform: translateY(-1px);
 }
 
-.btn-primary,
-.project-link {
+.btn-primary {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
   color: #04101f;
   font-weight: 700;
 }
 
-.btn-ghost,
-.project-link.ghost {
+.btn-ghost {
   background: transparent;
   color: var(--text);
   border-color: rgba(255, 255, 255, 0.14);
@@ -522,6 +520,36 @@ textarea {
   font-size: 1.3rem;
   line-height: 1.2;
   max-width: 14ch;
+}
+
+.project-links {
+  margin-top: auto;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: #04101f;
+  font-weight: 700;
+}
+
+.project-link:hover {
+  transform: translateY(-1px);
+}
+
+.project-link.ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .skills-grid {
