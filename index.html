@@ -1,23 +1,334 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <title>Página Inicial</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="main.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="main.js"></script>
-<title>Links: </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio de desenvolvedor com foco em frontend, experiência web, projetos autorais e publicação estática.">
+  <title>Portfólio | Desenvolvedor</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div w3-include-html="navbar.html"></div>
-    <script>
-        includeHTML();
-    </script>
-    <script>
-        dragAndSave(".wrap-content");
-    </script>
-    <script src="LCG.js"></script>
+  <div class="background-glow background-glow-a" aria-hidden="true"></div>
+  <div class="background-glow background-glow-b" aria-hidden="true"></div>
+
+  <button id="editToggleBtn" class="edit-toggle-btn" type="button" aria-controls="editPanel" aria-expanded="false">Modo edição</button>
+
+  <aside id="editPanel" class="edit-panel" aria-hidden="true">
+    <div class="edit-panel-header">
+      <div>
+        <p class="panel-kicker">Modo manutenção</p>
+        <h2>Painel de Edição</h2>
+      </div>
+      <button id="closePanelBtn" class="close-btn" type="button" aria-label="Fechar painel">✕</button>
+    </div>
+
+    <div class="edit-panel-content">
+      <p class="panel-note">
+        Use este modo apenas localmente. A versão pública abre sem o editor. Para acessar depois, use a URL com <code>?edit=1</code>.
+      </p>
+
+      <fieldset class="edit-section">
+        <legend>Apresentação</legend>
+        <label>
+          Nome completo
+          <input type="text" id="formFullName" placeholder="Seu nome">
+        </label>
+        <label>
+          Cargo / posicionamento
+          <input type="text" id="formJobTitle" placeholder="Ex: Desenvolvedor Front-End">
+        </label>
+        <label>
+          Resumo curto
+          <textarea id="formShortBio" rows="4" placeholder="Seu posicionamento profissional em 2 ou 3 linhas"></textarea>
+        </label>
+        <label>
+          Sobre em detalhes
+          <textarea id="formAboutText" rows="6" placeholder="Explique experiência, stack e tipo de problema que você resolve"></textarea>
+        </label>
+        <label>
+          Local / disponibilidade
+          <input type="text" id="formLocation" placeholder="Ex: São Paulo, Brasil | Remoto">
+        </label>
+        <label>
+          URL da foto
+          <input type="url" id="formPhotoUrl" placeholder="https://...">
+        </label>
+      </fieldset>
+
+      <fieldset class="edit-section">
+        <legend>Contato</legend>
+        <label>
+          Email
+          <input type="email" id="formEmail" placeholder="seu@email.com">
+        </label>
+        <label>
+          Telefone
+          <input type="tel" id="formPhone" placeholder="+55 (11) 9xxxx-xxxx">
+        </label>
+        <label>
+          GitHub
+          <input type="url" id="formGithub" placeholder="https://github.com/seu-usuario">
+        </label>
+        <label>
+          LinkedIn
+          <input type="url" id="formLinkedin" placeholder="https://linkedin.com/in/seu-perfil">
+        </label>
+        <label>
+          Currículo em PDF
+          <input type="url" id="formResumeUrl" placeholder="https://.../cv.pdf">
+        </label>
+      </fieldset>
+
+      <fieldset class="edit-section">
+        <legend>Ações rápidas</legend>
+        <div class="edit-actions">
+          <button id="addProjectBtn" class="btn btn-secondary" type="button">+ Projeto</button>
+          <button id="addEducationBtn" class="btn btn-secondary" type="button">+ Formação</button>
+          <button id="addSkillBtn" class="btn btn-secondary" type="button">+ Bloco de Skills</button>
+          <button id="exportBtn" class="btn btn-secondary" type="button">Exportar JSON</button>
+          <button id="importBtn" class="btn btn-secondary" type="button">Importar JSON</button>
+          <button id="resetBtn" class="btn btn-danger" type="button">Resetar Tudo</button>
+        </div>
+        <p class="panel-tip">
+          Dica: no modo edição, clique em links de projeto, GitHub, LinkedIn ou currículo para alterar a URL.
+        </p>
+      </fieldset>
+
+      <input type="file" id="importFileInput" hidden accept=".json">
+    </div>
+  </aside>
+
+  <header class="hero">
+    <nav class="topbar">
+      <a class="brand" href="#top">Dev Portfolio</a>
+      <div class="topbar-links">
+        <a href="#about">Sobre</a>
+        <a href="#projects">Projetos</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contato</a>
+      </div>
+    </nav>
+
+    <div class="hero-grid" id="top">
+      <section class="hero-copy">
+        <p id="profileTag" class="eyebrow editable-field" data-editable>Disponível para oportunidades</p>
+        <h1 id="fullName" class="editable-field" data-editable>Esteves Emmanuel</h1>
+        <p id="jobTitle" class="hero-title editable-field" data-editable>Desenvolvedor Fullstack focado em interfaces fortes, apelo visual e experiência web e consistencia .</p>
+        <p id="shortBio" class="hero-summary editable-field" data-editable>
+          Construo aplicações web com foco em impacto visual, organização técnica, integração de dados e clareza para produto. Meu objetivo é transformar ideias em experiências que funcionam bem e também comunicam valor em poucos segundos.
+        </p>
+
+        <div class="hero-meta">
+          <span id="locationText" class="meta-pill editable-field" data-editable>Brasil | Remoto / Híbrido (Rio de Janeiro)</span>
+          <span class="meta-pill">HTML, CSS, JavaScript, Python, PostgreSQL, React</span>
+          <span class="meta-pill">Projetos autorais/GitHub Pages/Azure/Vercel, etc.</span>
+        </div>
+
+        <div class="hero-actions">
+          <a id="heroGithub" class="btn btn-primary hero-link editable-link" data-link-label="Link do GitHub" href="https://github.com/estevesemf" target="_blank" rel="noreferrer">GitHub</a>
+          <a id="heroLinkedin" class="btn btn-ghost hero-link editable-link" data-link-label="Link do LinkedIn" href="https://www.linkedin.com/in/esteves-emmanuel-41048759/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a id="heroResume" class="btn btn-ghost hero-link editable-link" data-link-label="Link do currículo PDF" href="#" target="_blank" rel="noreferrer">Currículo</a>
+        </div>
+
+        <div class="hero-stats">
+          <article class="stat-card">
+            <span class="stat-value">2</span>
+            <span class="stat-label">projetos em desenvolvimento com proposta clara de produto</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Sites dinâmicos e prontos para deploy </span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">UI</span>
+            <span class="stat-label">ênfase em frontend e apresentação de dados</span>
+          </article>
+        </div>
+      </section>
+
+      <aside class="hero-card">
+        <img id="profilePhoto" class="profile-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='540' viewBox='0 0 480 540'%3E%3Crect width='480' height='540' rx='40' fill='%23151b2f'/%3E%3Ccircle cx='240' cy='190' r='78' fill='%232c3350'/%3E%3Crect x='110' y='295' width='260' height='120' rx='60' fill='%232c3350'/%3E%3Ctext x='50%25' y='500' text-anchor='middle' font-size='26' fill='%238ca3ff' font-family='Arial, sans-serif'%3ESua foto%3C/text%3E%3C/svg%3E" alt="Foto de perfil">
+        <div class="hero-card-copy">
+          <p class="card-label">Resumo profissional</p>
+          <p id="aboutLead" class="editable-field" data-editable>
+            Desenvolvedor com foco em criar interfaces responsivas, integrar APIs, organizar informação e transformar conceitos em produtos web com leitura forte e identidade própria.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <section id="about" class="section section-intro">
+      <div class="section-heading">
+        <p class="eyebrow">Sobre mim</p>
+        <h2>Contexto rápido para quem precisa entender meu perfil em poucos minutos</h2>
+      </div>
+      <div class="intro-grid">
+        <p id="aboutText" class="intro-text editable-field" data-editable>
+          Atuo com desenvolvimento web priorizando clareza visual, código legível e uma experiência que pareça pensada, não genérica. Gosto de trabalhar em projetos que precisam de identidade, boa hierarquia de informação e uma camada frontend capaz de valorizar o produto. Tenho interesse especial em interfaces com narrativa visual forte, dashboards, páginas temáticas e soluções SaaS com foco em usabilidade.
+        </p>
+        <div class="intro-points">
+          <article class="info-card">
+            <h3>O que posso colocar neste portfólio</h3>
+            <p>Case studies curtos, stack por projeto, desafios técnicos, decisões de interface, resultados esperados e links diretos para repositórios e demos.</p>
+          </article>
+          <article class="info-card">
+            <h3>Outras ideias para incluir</h3>
+            <p>Seção de processo, mini roadmap de estudos, stack preferida, experiências com APIs, deploys publicados e um bloco de aprendizado contínuo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-showcase">
+      <div class="section-heading">
+        <p class="eyebrow">Diferenciais</p>
+        <h2>O que faz este portfólio parecer mais autoral e mais útil em entrevista</h2>
+      </div>
+      <div class="showcase-grid">
+        <article class="showcase-card accent-blue">
+          <p class="showcase-kicker">Narrativa</p>
+          <h3>Projetos com contexto, não só prints e links</h3>
+          <p>Cada projeto pode explicar objetivo, público, decisões de interface, stack e o tipo de problema que você quis resolver.</p>
+        </article>
+        <article class="showcase-card accent-gold">
+          <p class="showcase-kicker">Produto</p>
+          <h3>Espaço para ideias em andamento</h3>
+          <p>Mesmo antes de concluídos, projetos bem descritos mostram visão de produto, critério visual e capacidade de execução.</p>
+        </article>
+        <article class="showcase-card accent-green">
+          <p class="showcase-kicker">Entrega</p>
+          <h3>Deploy simples e manutenção fácil</h3>
+          <p>HTML, CSS e JavaScript puro ajudam a publicar rápido, ajustar conteúdo com facilidade e mostrar domínio da base web.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Projetos em destaque</p>
+        <h2>Projetos que comunicam tema, produto e capacidade de frontend</h2>
+        <p class="section-copy">Aqui a ideia é mostrar trabalhos que tenham identidade visual forte e também espaço para conversa técnica sobre arquitetura, UX e publicação.</p>
+      </div>
+
+      <div id="projectsList" class="projects-grid">
+        <article class="project-card" data-index="0">
+          <div class="project-top">
+            <span class="project-badge">Projeto temático</span>
+            <span class="project-type editable-field" data-editable>Conteúdo + UI editorial</span>
+          </div>
+          <h3 class="editable-field" data-editable>Golden State Warriors + Stephen Curry Experience</h3>
+          <p class="editable-field" data-editable>Site temático dedicado ao universo do Golden State Warriors e à trajetória do Stephen Curry, com foco em narrativa visual, estatísticas, momentos marcantes, identidade esportiva e experiência imersiva para fãs.</p>
+          <p class="project-stack editable-field" data-editable>Frontend responsivo, seções editoriais, animações sutis, dados esportivos, galerias e storytelling visual</p>
+          <div class="project-links">
+            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-index="1">
+          <div class="project-top">
+            <span class="project-badge">Projeto SaaS</span>
+            <span class="project-type editable-field" data-editable>Painel + fluxo de atendimento</span>
+          </div>
+          <h3 class="editable-field" data-editable>SaaS de Atendimento para Loja de Agronegócio</h3>
+          <p class="editable-field" data-editable>Simulação de uma plataforma de atendimento para loja do agronegócio, com fluxo de clientes, histórico de pedidos, organização por prioridade, status de chamados e visão operacional de rotina comercial.</p>
+          <p class="project-stack editable-field" data-editable>Dashboard SaaS, tabelas, filtros, cards operacionais, UX para atendimento e gestão visual de processos</p>
+          <div class="project-links">
+            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-index="2">
+          <div class="project-top">
+            <span class="project-badge">Próximos destaques</span>
+            <span class="project-type editable-field" data-editable>Espaço curado</span>
+          </div>
+          <h3 class="editable-field" data-editable>Outros projetos que podem entrar aqui</h3>
+          <p class="editable-field" data-editable>Landing pages com identidade visual forte, dashboard com dados reais, clone conceitual com foco em UI, projeto consumindo API pública ou uma página de portfólio para estudo de motion e interação.</p>
+          <p class="project-stack editable-field" data-editable>Cases autorais, estudos de interface, integrações com API e experiências com design mais marcante</p>
+          <div class="project-links">
+            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Stack e atuação</p>
+        <h2>Skills agrupadas por tipo de entrega</h2>
+      </div>
+
+      <div id="skillsList" class="skills-grid">
+        <article class="skill-group" data-index="0">
+          <h3 class="editable-field" data-editable>Frontend</h3>
+          <p class="editable-field" data-editable>HTML semântico, CSS responsivo, JavaScript moderno, React, componentização, storytelling visual e construção de layouts com mais identidade.</p>
+        </article>
+        <article class="skill-group" data-index="1">
+          <h3 class="editable-field" data-editable>Produto e UX</h3>
+          <p class="editable-field" data-editable>Organização visual, hierarquia de informação, jornada de usuário, clareza em CTAs e construção de interfaces com intenção.</p>
+        </article>
+        <article class="skill-group" data-index="2">
+          <h3 class="editable-field" data-editable>Ferramentas</h3>
+          <p class="editable-field" data-editable>Git, GitHub, deploy estático, GitHub Pages, inspeção no navegador, versionamento e documentação enxuta para manutenção.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Formação e evolução</p>
+        <h2>Formação, cursos e contexto acadêmico</h2>
+      </div>
+
+      <div id="educationList" class="timeline">
+        <article class="timeline-item" data-index="0">
+          <p class="timeline-period editable-field" data-editable>2020 - 2024</p>
+          <h3 class="editable-field" data-editable>Graduação em Engenharia de Software</h3>
+          <p class="timeline-place editable-field" data-editable>Universidade XYZ</p>
+          <p class="editable-field" data-editable>Base em arquitetura, desenvolvimento web, banco de dados, resolução de problemas e trabalho em equipe.</p>
+        </article>
+        <article class="timeline-item" data-index="1">
+          <p class="timeline-period editable-field" data-editable>2024</p>
+          <h3 class="editable-field" data-editable>Estudos contínuos em Front-End e Interfaces</h3>
+          <p class="timeline-place editable-field" data-editable>Formação complementar</p>
+          <p class="editable-field" data-editable>Estudos voltados para componentização, responsividade, boas práticas de UI, narrativa visual e publicação estática.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="section-heading">
+        <p class="eyebrow">Contato</p>
+        <h2>Links prontos para seguir a conversa fora da entrevista</h2>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-primary">
+          <p class="contact-label">Email</p>
+          <a id="contactEmail" class="contact-value editable-link" data-link-label="Email de contato" href="mailto:seu@email.com">seu@email.com</a>
+        </div>
+        <div class="contact-primary">
+          <p class="contact-label">Telefone</p>
+          <a id="contactPhone" class="contact-value editable-link" data-link-label="Telefone de contato" href="tel:+5500000000000">+55 (00) 00000-0000</a>
+        </div>
+        <div class="contact-actions">
+          <a id="contactGithub" class="btn btn-primary editable-link" data-link-label="Link do GitHub" href="https://github.com/" target="_blank" rel="noreferrer">Perfil no GitHub</a>
+          <a id="contactLinkedin" class="btn btn-ghost editable-link" data-link-label="Link do LinkedIn" href="https://linkedin.com/" target="_blank" rel="noreferrer">Perfil no LinkedIn</a>
+          <a id="contactResume" class="btn btn-ghost editable-link" data-link-label="Link do currículo PDF" href="#" target="_blank" rel="noreferrer">Baixar currículo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="currentYear"></span> <span id="footerName">Seu Nome Aqui</span>. Portfólio publicado em HTML, CSS e JavaScript puro.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
