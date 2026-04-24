@@ -12,6 +12,11 @@ O site foi reposicionado para uso em entrevistas.
 - Estrutura preparada para destacar projetos reais do GitHub
 - Compatível com hospedagem estática no GitHub Pages
 - Sem dependências externas e sem build step
+- Navegação principal com âncora direta para `Skills`
+- Paleta escura com acentos em azul, âmbar, verde e lavanda
+- Botões claros com gradiente lavanda/azul e animação de seta no hover
+- Cards de projeto com título alinhado à direita e centralizado dentro do próprio bloco
+- CTAs dos projetos lado a lado no desktop e empilhados no mobile
 
 No estado atual, o site também passou a destacar melhor:
 
@@ -19,6 +24,7 @@ No estado atual, o site também passou a destacar melhor:
 - cards de destaque sobre diferenciais
 - apresentação de projetos com contexto de produto
 - espaço para projetos em andamento bem descritos
+- microinterações em botões, pills, cards, foto e links
 
 ## Arquitetura resumida
 
@@ -31,7 +37,7 @@ Blocos principais:
 - hero com nome, posicionamento, resumo e CTAs
 - bloco de estatísticas/resumo rápido
 - seção de apresentação
-- seção intermediária de diferenciais do portfólio
+- seção `Skills` com cards de diferenciais do portfólio
 - grid de projetos
 - cards de habilidades e diferenciais
 - formação
@@ -39,6 +45,13 @@ Blocos principais:
 - painel lateral de edição
 
 Os elementos com `data-editable` são transformados em editáveis apenas no modo `?edit=1`.
+
+Notas do estado atual:
+
+- o menu possui links para `#about`, `#skills`, `#projects` e `#contact`
+- a seção de skills usa `id="skills"` para navegação direta
+- os cards fixos de projeto usam classes compatíveis com o JavaScript: `.project-badge`, `.project-title`, `.project-type`, `.project-description` e `.project-stack`
+- os badges dos projetos também são editáveis no modo `?edit=1`
 
 ### `styles.css`
 
@@ -54,6 +67,18 @@ Pontos relevantes:
 - hero com presença maior e blocos de destaque visuais
 - responsividade sem framework
 - `body.edit-mode` ativa apenas os comportamentos visuais de edição
+- variáveis de cor centralizadas em `:root`
+- botões principais com gradiente claro em lavanda/azul
+- cards de projetos usam grid no cabeçalho para manter badge à esquerda e título à direita
+- links dos projetos usam grid com duas colunas no desktop e uma coluna no mobile
+- `prefers-reduced-motion` continua respeitado para reduzir animações
+
+Direção visual atual:
+
+- manter o fundo escuro e sofisticado
+- evitar voltar para um visual monocromático apenas azul/preto
+- preservar os acentos lavanda nos botões claros
+- manter hover perceptível, mas sem animações pesadas ou dependências externas
 
 ### `script.js`
 
@@ -216,6 +241,8 @@ Uma mudança é boa se ela melhorar pelo menos um destes pontos:
 - melhora a leitura dos links e CTAs
 - mantém deploy simples no GitHub Pages
 - reduz a cara de template genérico
+- preserva a navegação direta para as seções principais
+- mantém os cards de projetos equilibrados entre cabeçalho, texto e botões
 
 ## Próximos passos recomendados
 

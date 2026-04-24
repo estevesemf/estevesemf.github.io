@@ -25,11 +25,26 @@ Exemplos:
 ## Recursos atuais
 
 - layout estático compatível com GitHub Pages
+- navegação por âncoras para Sobre, Skills, Projetos e Contato
 - modo de edição sem backend
 - persistência local com `localStorage`
 - exportação e importação de dados em JSON
 - seções preparadas para projetos, habilidades em cards, formação e contato
+- identidade visual escura com acentos em azul, âmbar, verde e lavanda
+- botões e cards com microinterações de hover
+- cards de projetos com título à direita, CTAs lado a lado no desktop e layout adaptado no mobile
 - demo temática em `warriors/` linkada a partir do primeiro projeto
+
+## Estado visual atual
+
+A versão atual prioriza uma apresentação mais autoral e interativa:
+
+- fundo escuro com gradientes suaves e textura discreta
+- seção `Skills` acessível diretamente pelo menu
+- botões principais claros com gradiente lavanda/azul e seta animada no hover
+- cards de skills com cores por categoria
+- cards de projetos com melhor hierarquia entre badge, título, descrição, stack e links
+- foto/card do hero com zoom leve e sombra no hover
 
 ## Desenvolvimento local
 
