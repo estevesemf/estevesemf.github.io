@@ -33,7 +33,7 @@ Blocos principais:
 - seção de apresentação
 - seção intermediária de diferenciais do portfólio
 - grid de projetos
-- grid de skills por grupos
+- cards de habilidades e diferenciais
 - formação
 - contato
 - painel lateral de edição
@@ -63,8 +63,22 @@ Responsável por:
 - ler e gravar dados no `localStorage`
 - sincronizar painel de edição com a página
 - permitir editar links clicando neles no modo de edição
-- criar novos cards de projetos, formação e skills
+- criar novos cards de projetos e formação
 - exportar e importar JSON
+
+### `warriors/`
+
+Demo estática linkada pelo projeto `Golden State Warriors + Stephen Curry Experience`.
+
+Arquivos:
+
+- `warriors/index.html`: página editorial temática em inglês
+- `warriors/styles.css`: visual próprio da demo, independente do CSS principal
+- `warriors/script.js`: ano automático, reveal on scroll e interação dos cards de momentos
+
+Ponto de atenção:
+
+- a demo usa fontes do Google Fonts e imagens externas do Unsplash; se a intenção for manter o portfólio 100% offline, esses assets devem ser trazidos para `assets/`.
 
 ## Fonte de verdade dos dados
 
@@ -121,6 +135,7 @@ Comportamento:
 - clicar no link abre um `prompt`
 - informar a nova URL
 - o site salva automaticamente
+- links sem URL real aparecem como `em breve` na versão pública, mas continuam editáveis no modo `?edit=1`
 
 ## Projetos destacados no momento
 
@@ -155,7 +170,6 @@ O JSON exportado segue, em alto nível, esta estrutura:
     "resumeUrl": "https://.../cv.pdf"
   },
   "projects": [],
-  "skills": [],
   "education": []
 }
 ```

@@ -19,6 +19,7 @@ Exemplos:
 - `index.html`: estrutura da página e conteúdo inicial
 - `styles.css`: identidade visual, responsividade e estilos do modo de edição
 - `script.js`: lógica de edição, persistência em `localStorage` e sincronização do conteúdo
+- `warriors/`: demo temática do projeto Golden State Warriors + Stephen Curry Experience
 - `README.adendo.md`: contexto operacional para manutenção futura
 
 ## Recursos atuais
@@ -27,7 +28,8 @@ Exemplos:
 - modo de edição sem backend
 - persistência local com `localStorage`
 - exportação e importação de dados em JSON
-- seções preparadas para projetos, skills, formação e contato
+- seções preparadas para projetos, habilidades em cards, formação e contato
+- demo temática em `warriors/` linkada a partir do primeiro projeto
 
 ## Desenvolvimento local
 

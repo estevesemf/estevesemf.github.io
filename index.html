@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portfólio de desenvolvedor com foco em frontend, experiência web, projetos autorais e publicação estática.">
   <title>Portfólio | Desenvolvedor</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260423-3">
 </head>
 <body>
   <div class="background-glow background-glow-a" aria-hidden="true"></div>
@@ -84,7 +84,6 @@
         <div class="edit-actions">
           <button id="addProjectBtn" class="btn btn-secondary" type="button">+ Projeto</button>
           <button id="addEducationBtn" class="btn btn-secondary" type="button">+ Formação</button>
-          <button id="addSkillBtn" class="btn btn-secondary" type="button">+ Bloco de Skills</button>
           <button id="exportBtn" class="btn btn-secondary" type="button">Exportar JSON</button>
           <button id="importBtn" class="btn btn-secondary" type="button">Importar JSON</button>
           <button id="resetBtn" class="btn btn-danger" type="button">Resetar Tudo</button>
@@ -104,7 +103,6 @@
       <div class="topbar-links">
         <a href="#about">Sobre</a>
         <a href="#projects">Projetos</a>
-        <a href="#skills">Skills</a>
         <a href="#contact">Contato</a>
       </div>
     </nav>
@@ -147,7 +145,7 @@
       </section>
 
       <aside class="hero-card">
-        <img id="profilePhoto" class="profile-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='540' viewBox='0 0 480 540'%3E%3Crect width='480' height='540' rx='40' fill='%23151b2f'/%3E%3Ccircle cx='240' cy='190' r='78' fill='%232c3350'/%3E%3Crect x='110' y='295' width='260' height='120' rx='60' fill='%232c3350'/%3E%3Ctext x='50%25' y='500' text-anchor='middle' font-size='26' fill='%238ca3ff' font-family='Arial, sans-serif'%3ESua foto%3C/text%3E%3C/svg%3E" alt="Foto de perfil">
+        <img id="profilePhoto" class="profile-photo" src="perfil.jpg" alt="Foto de perfil">
         <div class="hero-card-copy">
           <p class="card-label">Resumo profissional</p>
           <p id="aboutLead" class="editable-field" data-editable>
@@ -183,24 +181,24 @@
 
     <section class="section section-showcase">
       <div class="section-heading">
-        <p class="eyebrow">Diferenciais</p>
-        <h2>O que faz este portfólio parecer mais autoral e mais útil em entrevista</h2>
+        <p class="eyebrow">Skills</p>
+        <h2>Os pontos que resumem como eu penso produto, dados e entrega técnica</h2>
       </div>
       <div class="showcase-grid">
-        <article class="showcase-card accent-blue">
-          <p class="showcase-kicker">Narrativa</p>
-          <h3>Projetos com contexto, não só prints e links</h3>
-          <p>Cada projeto pode explicar objetivo, público, decisões de interface, stack e o tipo de problema que você quis resolver.</p>
+        <article class="showcase-card accent-neutral">
+          <p class="showcase-kicker">Frontend e design</p>
+          <h3>Sites bonitos, seguros e com apelo visual forte</h3>
+          <p>Tenho foco em construir sites com identidade visual clara, boa hierarquia, design pensado para causar impacto e uma experiência que passe valor logo no primeiro contato, sem abrir mão de estrutura sólida e segurança.</p>
         </article>
         <article class="showcase-card accent-gold">
-          <p class="showcase-kicker">Produto</p>
-          <h3>Espaço para ideias em andamento</h3>
-          <p>Mesmo antes de concluídos, projetos bem descritos mostram visão de produto, critério visual e capacidade de execução.</p>
+          <p class="showcase-kicker">Dados e dashboards</p>
+          <h3>Integração com dados como especialidade de entrega</h3>
+          <p>Trabalho bem com dados em bancos relacionais e não relacionais, de soluções mais diretas com PostgreSQL e MySQL até cenários com DuckDB, ClickHouse e bases NoSQL. Isso ajuda a organizar, consultar e apresentar os dados do cliente com clareza em dashboards, painéis e interfaces operacionais.</p>
         </article>
         <article class="showcase-card accent-green">
-          <p class="showcase-kicker">Entrega</p>
-          <h3>Deploy simples e manutenção fácil</h3>
-          <p>HTML, CSS e JavaScript puro ajudam a publicar rápido, ajustar conteúdo com facilidade e mostrar domínio da base web.</p>
+          <p class="showcase-kicker">Backend e stack</p>
+          <h3>Base forte em linguagens, APIs e deploy</h3>
+          <p>Tenho base em várias linguagens, como C, Java, Python e JavaScript, o que me dá repertório para atuar no backend com integração de APIs, regras de negócio, publicação de serviços e processos de deploy com Docker e outras rotinas de entrega.</p>
         </article>
       </div>
     </section>
@@ -216,7 +214,6 @@
         <article class="project-card" data-index="0">
           <div class="project-top">
             <span class="project-badge">Projeto temático</span>
-            <span class="project-type editable-field" data-editable>Conteúdo + UI editorial</span>
           </div>
           <h3 class="editable-field" data-editable>Golden State Warriors + Stephen Curry Experience</h3>
           <p class="editable-field" data-editable>Site temático dedicado ao universo do Golden State Warriors e à trajetória do Stephen Curry, com foco em narrativa visual, estatísticas, momentos marcantes, identidade esportiva e experiência imersiva para fãs.</p>
@@ -230,7 +227,6 @@
         <article class="project-card" data-index="1">
           <div class="project-top">
             <span class="project-badge">Projeto SaaS</span>
-            <span class="project-type editable-field" data-editable>Painel + fluxo de atendimento</span>
           </div>
           <h3 class="editable-field" data-editable>SaaS de Atendimento para Loja de Agronegócio</h3>
           <p class="editable-field" data-editable>Simulação de uma plataforma de atendimento para loja do agronegócio, com fluxo de clientes, histórico de pedidos, organização por prioridade, status de chamados e visão operacional de rotina comercial.</p>
@@ -244,7 +240,6 @@
         <article class="project-card" data-index="2">
           <div class="project-top">
             <span class="project-badge">Próximos destaques</span>
-            <span class="project-type editable-field" data-editable>Espaço curado</span>
           </div>
           <h3 class="editable-field" data-editable>Outros projetos que podem entrar aqui</h3>
           <p class="editable-field" data-editable>Landing pages com identidade visual forte, dashboard com dados reais, clone conceitual com foco em UI, projeto consumindo API pública ou uma página de portfólio para estudo de motion e interação.</p>
@@ -253,28 +248,6 @@
             <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
             <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="skills" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">Stack e atuação</p>
-        <h2>Skills agrupadas por tipo de entrega</h2>
-      </div>
-
-      <div id="skillsList" class="skills-grid">
-        <article class="skill-group" data-index="0">
-          <h3 class="editable-field" data-editable>Frontend</h3>
-          <p class="editable-field" data-editable>HTML semântico, CSS responsivo, JavaScript moderno, React, componentização, storytelling visual e construção de layouts com mais identidade.</p>
-        </article>
-        <article class="skill-group" data-index="1">
-          <h3 class="editable-field" data-editable>Produto e UX</h3>
-          <p class="editable-field" data-editable>Organização visual, hierarquia de informação, jornada de usuário, clareza em CTAs e construção de interfaces com intenção.</p>
-        </article>
-        <article class="skill-group" data-index="2">
-          <h3 class="editable-field" data-editable>Ferramentas</h3>
-          <p class="editable-field" data-editable>Git, GitHub, deploy estático, GitHub Pages, inspeção no navegador, versionamento e documentação enxuta para manutenção.</p>
         </article>
       </div>
     </section>

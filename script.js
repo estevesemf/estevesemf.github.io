@@ -43,9 +43,7 @@ function applyDataToPage(data) {
   setText('locationText', data.locationText);
   setText('profileTag', data.profileTag);
 
-  if (data.photoUrl) {
-    document.getElementById('profilePhoto').src = data.photoUrl;
-  }
+  document.getElementById('profilePhoto').src = normalizePhotoUrl(data.photoUrl);
 
   applyContactData(data.contact || {});
 
@@ -54,14 +52,6 @@ function applyDataToPage(data) {
     container.innerHTML = '';
     data.projects.forEach((project, index) => {
       container.appendChild(createProjectCard(project, index));
-    });
-  }
-
-  if (Array.isArray(data.skills) && data.skills.length > 0) {
-    const container = document.getElementById('skillsList');
-    container.innerHTML = '';
-    data.skills.forEach((skill, index) => {
-      container.appendChild(createSkillGroup(skill, index));
     });
   }
 
@@ -114,7 +104,7 @@ function getDataFromPage() {
     aboutText: getText('aboutText'),
     locationText: getText('locationText'),
     profileTag: getText('profileTag'),
-    photoUrl: document.getElementById('profilePhoto').src,
+    photoUrl: normalizePhotoUrl(document.getElementById('profilePhoto').src),
     contact: {
       email: document.getElementById('contactEmail').getAttribute('href') || '',
       phone: document.getElementById('contactPhone').getAttribute('href') || '',
@@ -123,7 +113,6 @@ function getDataFromPage() {
       resumeUrl: document.getElementById('contactResume').getAttribute('href') || '',
     },
     projects: getProjectsData(),
-    skills: getSkillsData(),
     education: getEducationData(),
   };
 }
@@ -132,18 +121,11 @@ function getProjectsData() {
   return Array.from(document.querySelectorAll('#projectsList .project-card')).map((item) => ({
     badge: item.querySelector('.project-badge').textContent.trim(),
     type: item.querySelector('.project-type').textContent.trim(),
-    title: item.querySelector('h3').textContent.trim(),
-    description: item.querySelector('p.editable-field').textContent.trim(),
+    title: item.querySelector('.project-title').textContent.trim(),
+    description: item.querySelector('.project-description').textContent.trim(),
     stack: item.querySelector('.project-stack').textContent.trim(),
     github: item.querySelector('.project-link').getAttribute('href') || '',
     live: item.querySelector('.project-link.ghost').getAttribute('href') || '',
-  }));
-}
-
-function getSkillsData() {
-  return Array.from(document.querySelectorAll('#skillsList .skill-group')).map((item) => ({
-    title: item.querySelector('h3').textContent.trim(),
-    description: item.querySelector('p').textContent.trim(),
   }));
 }
 
@@ -152,7 +134,7 @@ function getEducationData() {
     period: item.querySelector('.timeline-period').textContent.trim(),
     title: item.querySelector('h3').textContent.trim(),
     institution: item.querySelector('.timeline-place').textContent.trim(),
-    details: item.querySelector('p.editable-field').textContent.trim(),
+    details: item.querySelector('.timeline-details').textContent.trim(),
   }));
 }
 
@@ -200,12 +182,19 @@ function setupEditableLinks() {
       if (next === null) return;
 
       const normalized = normalizeLinkValue(link.id, next.trim());
-      link.setAttribute('href', normalized);
+      setInteractiveHref(link, normalized);
+      syncRelatedContactLinks(link.id, normalized);
 
       if (link.id === 'contactEmail') {
-        link.textContent = normalized.replace(/^mailto:/, '');
+        link.textContent = normalized ? normalized.replace(/^mailto:/, '') : 'Email em breve';
       } else if (link.id === 'contactPhone') {
-        link.textContent = normalized.replace(/^tel:/, '');
+        link.textContent = normalized ? normalized.replace(/^tel:/, '') : 'Telefone em breve';
+      } else if (link.id === 'heroResume') {
+        link.textContent = normalized ? 'Currículo' : 'Currículo em breve';
+      } else if (link.id === 'contactResume') {
+        link.textContent = normalized ? 'Baixar currículo' : 'Currículo em breve';
+      } else if (link.classList.contains('project-link')) {
+        link.textContent = getProjectLinkText(link, normalized);
       }
 
       syncDerivedFields();
@@ -267,7 +256,7 @@ function updateFormFromPage() {
   document.getElementById('formShortBio').value = getText('shortBio');
   document.getElementById('formAboutText').value = getText('aboutText');
   document.getElementById('formLocation').value = getText('locationText');
-  document.getElementById('formPhotoUrl').value = document.getElementById('profilePhoto').src;
+  document.getElementById('formPhotoUrl').value = normalizePhotoUrl(document.getElementById('profilePhoto').src);
   document.getElementById('formEmail').value = (document.getElementById('contactEmail').getAttribute('href') || '').replace(/^mailto:/, '');
   document.getElementById('formPhone').value = (document.getElementById('contactPhone').getAttribute('href') || '').replace(/^tel:/, '');
   document.getElementById('formGithub').value = document.getElementById('contactGithub').getAttribute('href') || '';
@@ -318,8 +307,8 @@ function setupButtonListeners() {
       title: 'Nome do projeto',
       description: 'Explique rapidamente o problema resolvido, seu papel e o resultado mais importante.',
       stack: 'Stack principal, arquitetura, integração, responsividade',
-      github: 'https://github.com/',
-      live: '#',
+      github: '',
+      live: '',
     }, container.children.length));
     refreshEditableContent();
   });
@@ -331,15 +320,6 @@ function setupButtonListeners() {
       title: 'Nova formação ou curso',
       institution: 'Instituição',
       details: 'Explique o contexto relevante para sua carreira.',
-    }, container.children.length));
-    refreshEditableContent();
-  });
-
-  document.getElementById('addSkillBtn').addEventListener('click', () => {
-    const container = document.getElementById('skillsList');
-    container.appendChild(createSkillGroup({
-      title: 'Novo bloco de skills',
-      description: 'Liste aqui tecnologias, práticas ou ferramentas relacionadas.',
     }, container.children.length));
     refreshEditableContent();
   });
@@ -367,30 +347,29 @@ function createProjectCard(project, index) {
   const article = document.createElement('article');
   article.className = 'project-card';
   article.dataset.index = index;
-  article.innerHTML = `
-    <div class="project-top">
-      <span class="project-badge">${project.badge || 'Projeto'}</span>
-      <span class="project-type editable-field" data-editable>${project.type || 'Tipo'}</span>
-    </div>
-    <h3 class="editable-field" data-editable>${project.title || 'Nome do projeto'}</h3>
-    <p class="editable-field" data-editable>${project.description || 'Descrição do projeto'}</p>
-    <p class="project-stack editable-field" data-editable>${project.stack || 'Stack do projeto'}</p>
-    <div class="project-links">
-      <a href="${project.github || 'https://github.com/'}" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
-      <a href="${project.live || '#'}" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
-    </div>
-  `;
-  return article;
-}
 
-function createSkillGroup(skill, index) {
-  const article = document.createElement('article');
-  article.className = 'skill-group';
-  article.dataset.index = index;
-  article.innerHTML = `
-    <h3 class="editable-field" data-editable>${skill.title || 'Novo bloco'}</h3>
-    <p class="editable-field" data-editable>${skill.description || 'Descrição das skills.'}</p>
-  `;
+  const top = document.createElement('div');
+  top.className = 'project-top';
+  top.append(
+    createEditableElement('span', 'project-badge editable-field', project.badge || 'Projeto'),
+    createEditableElement('h3', 'project-title editable-field', project.title || 'Nome do projeto'),
+  );
+
+  const links = document.createElement('div');
+  links.className = 'project-links';
+  links.append(
+    createProjectLink(project.github || '', 'Código no GitHub', 'Repositório do projeto'),
+    createProjectLink(project.live || '', 'Ver demo', 'Demo do projeto', true),
+  );
+
+  article.append(
+    top,
+    createEditableElement('p', 'project-type editable-field', project.type || 'Tipo'),
+    createEditableElement('p', 'project-description editable-field', project.description || 'Descrição do projeto'),
+    createEditableElement('p', 'project-stack editable-field', project.stack || 'Stack do projeto'),
+    links,
+  );
+
   return article;
 }
 
@@ -398,13 +377,32 @@ function createEducationItem(item, index) {
   const article = document.createElement('article');
   article.className = 'timeline-item';
   article.dataset.index = index;
-  article.innerHTML = `
-    <p class="timeline-period editable-field" data-editable>${item.period || 'Ano'}</p>
-    <h3 class="editable-field" data-editable>${item.title || 'Nova formação'}</h3>
-    <p class="timeline-place editable-field" data-editable>${item.institution || 'Instituição'}</p>
-    <p class="editable-field" data-editable>${item.details || 'Detalhes da formação'}</p>
-  `;
+
+  article.append(
+    createEditableElement('p', 'timeline-period editable-field', item.period || 'Ano'),
+    createEditableElement('h3', 'editable-field', item.title || 'Nova formação'),
+    createEditableElement('p', 'timeline-place editable-field', item.institution || 'Instituição'),
+    createEditableElement('p', 'timeline-details editable-field', item.details || 'Detalhes da formação'),
+  );
+
   return article;
+}
+
+function createEditableElement(tagName, className, text) {
+  const element = document.createElement(tagName);
+  element.className = className;
+  element.dataset.editable = '';
+  element.textContent = text;
+  return element;
+}
+
+function createProjectLink(href, text, label, isGhost = false) {
+  const link = document.createElement('a');
+  link.className = isGhost ? 'project-link ghost editable-link' : 'project-link editable-link';
+  link.dataset.linkLabel = label;
+  setInteractiveHref(link, href);
+  link.textContent = getProjectLinkText(link, href) || text;
+  return link;
 }
 
 function exportJSON() {
@@ -454,18 +452,77 @@ function getText(id) {
 
 function setLink(id, href, text) {
   const link = document.getElementById(id);
-  if (!href) return;
-  link.setAttribute('href', href);
-  if (text) link.textContent = text;
+  setInteractiveHref(link, href);
+  if (!href && id === 'contactEmail') {
+    link.textContent = 'Email em breve';
+  } else if (!href && id === 'contactPhone') {
+    link.textContent = 'Telefone em breve';
+  } else if (!href && (id === 'heroResume' || id === 'contactResume')) {
+    link.textContent = 'Currículo em breve';
+  } else if (text) {
+    link.textContent = text;
+  }
+}
+
+function setInteractiveHref(link, href) {
+  if (href && href !== '#') {
+    link.setAttribute('href', href);
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+    link.removeAttribute('aria-disabled');
+    return;
+  }
+
+  link.removeAttribute('href');
+  link.removeAttribute('target');
+  link.removeAttribute('rel');
+  link.setAttribute('aria-disabled', 'true');
+}
+
+function getProjectLinkText(link, href) {
+  const hasHref = href && href !== '#';
+  if (link.classList.contains('ghost')) {
+    return hasHref ? 'Ver demo' : 'Demo em breve';
+  }
+  return hasHref ? 'Código no GitHub' : 'Código em breve';
+}
+
+function syncRelatedContactLinks(id, href) {
+  const pairs = {
+    heroGithub: 'contactGithub',
+    contactGithub: 'heroGithub',
+    heroLinkedin: 'contactLinkedin',
+    contactLinkedin: 'heroLinkedin',
+    heroResume: 'contactResume',
+    contactResume: 'heroResume',
+  };
+  const relatedId = pairs[id];
+  if (!relatedId) return;
+
+  const relatedLink = document.getElementById(relatedId);
+  setInteractiveHref(relatedLink, href);
+
+  if (relatedId === 'heroResume') {
+    relatedLink.textContent = href ? 'Currículo' : 'Currículo em breve';
+  } else if (relatedId === 'contactResume') {
+    relatedLink.textContent = href ? 'Baixar currículo' : 'Currículo em breve';
+  }
 }
 
 function normalizeLinkValue(id, value) {
-  if (!value) return '#';
+  if (!value) return '';
   if (id === 'contactEmail') {
     return value.startsWith('mailto:') ? value : `mailto:${value}`;
   }
   if (id === 'contactPhone') {
     return value.startsWith('tel:') ? value : `tel:${value}`;
   }
+  return value;
+}
+
+function normalizePhotoUrl(value) {
+  if (!value) return 'perfil.jpg';
+  if (value.startsWith('data:image/svg+xml')) return 'perfil.jpg';
+  if (value === 'perfil/perfil.jpg' || value.endsWith('/perfil/perfil.jpg')) return 'perfil.jpg';
   return value;
 }
