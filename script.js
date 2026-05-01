@@ -3,12 +3,14 @@ const DEBOUNCE_DELAY = 250;
 const EDIT_MODE = new URLSearchParams(window.location.search).get('edit') === '1';
 
 let debounceTimer;
+let projectObserver;
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.toggle('edit-mode', EDIT_MODE);
   document.getElementById('currentYear').textContent = new Date().getFullYear();
 
   loadFromStorage();
+  syncProfilePhotoSlices();
   syncDerivedFields();
 
   if (EDIT_MODE) {
@@ -20,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEditableLinks();
     updateFormFromPage();
   }
+
+  initScrollReveal();
+  initProjectShowcase();
 });
 
 function loadFromStorage() {
@@ -44,15 +49,17 @@ function applyDataToPage(data) {
   setText('profileTag', data.profileTag);
 
   document.getElementById('profilePhoto').src = normalizePhotoUrl(data.photoUrl);
+  syncProfilePhotoSlices();
 
   applyContactData(data.contact || {});
 
   if (Array.isArray(data.projects) && data.projects.length > 0) {
-    const container = document.getElementById('projectsList');
+    const container = getProjectsContainer();
     container.innerHTML = '';
     data.projects.forEach((project, index) => {
       container.appendChild(createProjectCard(project, index));
     });
+    syncProjectShowcase();
   }
 
   if (Array.isArray(data.education) && data.education.length > 0) {
@@ -118,7 +125,7 @@ function getDataFromPage() {
 }
 
 function getProjectsData() {
-  return Array.from(document.querySelectorAll('#projectsList .project-card')).map((item) => ({
+  return Array.from(getProjectsContainer().querySelectorAll('.project-card')).map((item) => ({
     badge: item.querySelector('.project-badge').textContent.trim(),
     type: item.querySelector('.project-type').textContent.trim(),
     title: item.querySelector('.project-title').textContent.trim(),
@@ -130,12 +137,16 @@ function getProjectsData() {
 }
 
 function getEducationData() {
-  return Array.from(document.querySelectorAll('#educationList .timeline-item')).map((item) => ({
-    period: item.querySelector('.timeline-period').textContent.trim(),
-    title: item.querySelector('h3').textContent.trim(),
-    institution: item.querySelector('.timeline-place').textContent.trim(),
-    details: item.querySelector('.timeline-details').textContent.trim(),
-  }));
+  return Array.from(document.querySelectorAll('#educationList .timeline-item')).map((item) => {
+    const details = item.querySelector('.timeline-details') || item.querySelector('p:last-child');
+
+    return {
+      period: item.querySelector('.timeline-period').textContent.trim(),
+      title: item.querySelector('h3').textContent.trim(),
+      institution: item.querySelector('.timeline-place').textContent.trim(),
+      details: details ? details.textContent.trim() : '',
+    };
+  });
 }
 
 function saveToStorage() {
@@ -147,6 +158,7 @@ function debouncedSave() {
   debounceTimer = setTimeout(() => {
     saveToStorage();
     syncDerivedFields();
+    syncProjectPosterText();
     updateFormFromPage();
   }, DEBOUNCE_DELAY);
 }
@@ -185,14 +197,15 @@ function setupEditableLinks() {
       setInteractiveHref(link, normalized);
       syncRelatedContactLinks(link.id, normalized);
 
+      const hasHref = normalized && normalized !== '#';
       if (link.id === 'contactEmail') {
-        link.textContent = normalized ? normalized.replace(/^mailto:/, '') : 'Email em breve';
+        link.textContent = hasHref ? normalized.replace(/^mailto:/, '') : 'Email em breve';
       } else if (link.id === 'contactPhone') {
-        link.textContent = normalized ? normalized.replace(/^tel:/, '') : 'Telefone em breve';
+        link.textContent = hasHref ? normalized.replace(/^tel:/, '') : 'Telefone em breve';
       } else if (link.id === 'heroResume') {
-        link.textContent = normalized ? 'Currículo' : 'Currículo em breve';
+        link.textContent = hasHref ? 'Currículo' : 'Currículo em breve';
       } else if (link.id === 'contactResume') {
-        link.textContent = normalized ? 'Baixar currículo' : 'Currículo em breve';
+        link.textContent = hasHref ? 'Baixar currículo' : 'Currículo em breve';
       } else if (link.classList.contains('project-link')) {
         link.textContent = getProjectLinkText(link, normalized);
       }
@@ -214,6 +227,7 @@ function setupFormBindings() {
     formPhotoUrl: (value) => {
       if (value) {
         document.getElementById('profilePhoto').src = value;
+        syncProfilePhotoSlices();
       }
     },
     formEmail: (value) => {
@@ -300,7 +314,7 @@ function setupEditPanel() {
 
 function setupButtonListeners() {
   document.getElementById('addProjectBtn').addEventListener('click', () => {
-    const container = document.getElementById('projectsList');
+    const container = getProjectsContainer();
     container.appendChild(createProjectCard({
       badge: 'Novo projeto',
       type: 'Tipo do projeto',
@@ -340,6 +354,7 @@ function refreshEditableContent() {
   enableEditableMode();
   setupEditableFields();
   setupEditableLinks();
+  syncProjectShowcase();
   debouncedSave();
 }
 
@@ -347,6 +362,12 @@ function createProjectCard(project, index) {
   const article = document.createElement('article');
   article.className = 'project-card';
   article.dataset.index = index;
+  article.setAttribute('data-project-step', '');
+
+  const number = document.createElement('p');
+  number.className = 'project-number';
+  number.setAttribute('aria-hidden', 'true');
+  number.textContent = formatProjectNumber(index);
 
   const top = document.createElement('div');
   top.className = 'project-top';
@@ -363,6 +384,7 @@ function createProjectCard(project, index) {
   );
 
   article.append(
+    number,
     top,
     createEditableElement('p', 'project-type editable-field', project.type || 'Tipo'),
     createEditableElement('p', 'project-description editable-field', project.description || 'Descrição do projeto'),
@@ -452,12 +474,13 @@ function getText(id) {
 
 function setLink(id, href, text) {
   const link = document.getElementById(id);
+  const hasHref = href && href !== '#';
   setInteractiveHref(link, href);
-  if (!href && id === 'contactEmail') {
+  if (!hasHref && id === 'contactEmail') {
     link.textContent = 'Email em breve';
-  } else if (!href && id === 'contactPhone') {
+  } else if (!hasHref && id === 'contactPhone') {
     link.textContent = 'Telefone em breve';
-  } else if (!href && (id === 'heroResume' || id === 'contactResume')) {
+  } else if (!hasHref && (id === 'heroResume' || id === 'contactResume')) {
     link.textContent = 'Currículo em breve';
   } else if (text) {
     link.textContent = text;
@@ -500,12 +523,13 @@ function syncRelatedContactLinks(id, href) {
   if (!relatedId) return;
 
   const relatedLink = document.getElementById(relatedId);
+  const hasHref = href && href !== '#';
   setInteractiveHref(relatedLink, href);
 
   if (relatedId === 'heroResume') {
-    relatedLink.textContent = href ? 'Currículo' : 'Currículo em breve';
+    relatedLink.textContent = hasHref ? 'Currículo' : 'Currículo em breve';
   } else if (relatedId === 'contactResume') {
-    relatedLink.textContent = href ? 'Baixar currículo' : 'Currículo em breve';
+    relatedLink.textContent = hasHref ? 'Baixar currículo' : 'Currículo em breve';
   }
 }
 
@@ -518,6 +542,269 @@ function normalizeLinkValue(id, value) {
     return value.startsWith('tel:') ? value : `tel:${value}`;
   }
   return value;
+}
+
+function initScrollReveal() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.06, rootMargin: '0px 0px -32px 0px' }
+  );
+
+  document.querySelectorAll('.section').forEach((section, i) => {
+    section.classList.add('reveal');
+    section.style.transitionDelay = '0ms';
+    observer.observe(section);
+  });
+}
+
+function initProjectShowcase() {
+  const showcase = document.getElementById('projectsList');
+  if (!showcase) return;
+
+  syncProjectShowcase();
+
+  const nav = showcase.querySelector('.project-nav');
+  if (nav && nav.dataset.bound !== 'true') {
+    nav.dataset.bound = 'true';
+    nav.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-project-target]');
+      if (!button) return;
+
+      const target = getProjectsContainer().querySelector(`.project-card[data-index="${button.dataset.projectTarget}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      setActiveProject(button.dataset.projectTarget);
+    });
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', updateProjectParallax, { passive: true });
+    updateProjectParallax();
+  }
+}
+
+function syncProjectShowcase() {
+  const showcase = document.getElementById('projectsList');
+  const container = getProjectsContainer();
+  if (!showcase || !container) return;
+
+  const cards = Array.from(container.querySelectorAll('.project-card'));
+  const frame = showcase.querySelector('.project-frame');
+  const nav = showcase.querySelector('.project-nav');
+  if (!frame || !nav || cards.length === 0) return;
+
+  cards.forEach((card, index) => {
+    card.dataset.index = index;
+    card.setAttribute('data-project-step', '');
+
+    let number = card.querySelector('.project-number');
+    if (!number) {
+      number = document.createElement('p');
+      number.className = 'project-number';
+      number.setAttribute('aria-hidden', 'true');
+      card.prepend(number);
+    }
+    number.textContent = formatProjectNumber(index);
+
+    let poster = frame.querySelector(`.project-poster[data-index="${index}"]`);
+    if (!poster) {
+      poster = createProjectPoster(index);
+      frame.insertBefore(poster, nav);
+    }
+
+    let button = nav.querySelector(`.project-nav-button[data-project-target="${index}"]`);
+    if (!button) {
+      button = createProjectNavButton(index);
+      nav.appendChild(button);
+    }
+
+    syncProjectPoster(card, poster, index);
+  });
+
+  frame.querySelectorAll('.project-poster').forEach((poster) => {
+    if (Number(poster.dataset.index) >= cards.length) {
+      poster.remove();
+    }
+  });
+
+  nav.querySelectorAll('.project-nav-button').forEach((button) => {
+    if (Number(button.dataset.projectTarget) >= cards.length) {
+      button.remove();
+    }
+  });
+
+  const active = container.querySelector('.project-card.is-active') || cards[0];
+  setActiveProject(active.dataset.index || '0');
+  observeProjectCards();
+}
+
+function syncProjectPosterText() {
+  const showcase = document.getElementById('projectsList');
+  const container = getProjectsContainer();
+  if (!showcase || !container) return;
+
+  container.querySelectorAll('.project-card').forEach((card) => {
+    const poster = showcase.querySelector(`.project-poster[data-index="${card.dataset.index}"]`);
+    if (poster) {
+      syncProjectPoster(card, poster, Number(card.dataset.index));
+    }
+  });
+}
+
+function syncProjectPoster(card, poster, index) {
+  const badge = card.querySelector('.project-badge')?.textContent.trim() || 'Projeto';
+  const title = card.querySelector('.project-title')?.textContent.trim() || 'Projeto em destaque';
+
+  poster.querySelector('.poster-count').textContent = formatProjectNumber(index);
+  poster.querySelector('.poster-eyebrow').textContent = badge;
+  poster.querySelector('.poster-title').textContent = title;
+}
+
+function createProjectPoster(index) {
+  const poster = document.createElement('article');
+  poster.className = 'project-poster';
+  poster.dataset.index = index;
+  poster.setAttribute('data-project-poster', '');
+
+  const art = document.createElement('div');
+  art.className = 'poster-art';
+  art.dataset.variant = ['court', 'agro', 'lab'][index % 3];
+  art.setAttribute('aria-hidden', 'true');
+
+  ['a', 'b', 'c'].forEach((suffix) => {
+    const crop = document.createElement('span');
+    crop.className = `poster-crop poster-crop-${suffix}`;
+    art.appendChild(crop);
+  });
+
+  ['a', 'b'].forEach((suffix) => {
+    const line = document.createElement('span');
+    line.className = `poster-line poster-line-${suffix}`;
+    art.appendChild(line);
+  });
+
+  const caption = document.createElement('div');
+  caption.className = 'poster-caption';
+
+  const count = document.createElement('span');
+  count.className = 'poster-count';
+
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'poster-eyebrow';
+
+  const title = document.createElement('h3');
+  title.className = 'poster-title';
+
+  caption.append(count, eyebrow, title);
+  poster.append(art, caption);
+
+  return poster;
+}
+
+function createProjectNavButton(index) {
+  const button = document.createElement('button');
+  button.className = 'project-nav-button';
+  button.type = 'button';
+  button.dataset.projectTarget = index;
+  button.setAttribute('aria-label', `Ir para o projeto ${index + 1}`);
+  button.textContent = formatProjectNumber(index);
+  return button;
+}
+
+function observeProjectCards() {
+  const container = getProjectsContainer();
+  const cards = Array.from(container.querySelectorAll('.project-card'));
+  if (cards.length === 0) return;
+
+  if (projectObserver) {
+    projectObserver.disconnect();
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    setActiveProject(0);
+    return;
+  }
+
+  projectObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleEntry = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visibleEntry) {
+        setActiveProject(visibleEntry.target.dataset.index);
+      }
+    },
+    { threshold: [0.2, 0.45, 0.7], rootMargin: '-22% 0px -35% 0px' }
+  );
+
+  cards.forEach((card) => projectObserver.observe(card));
+}
+
+function setActiveProject(index) {
+  const showcase = document.getElementById('projectsList');
+  const container = getProjectsContainer();
+  if (!showcase || !container) return;
+
+  const normalizedIndex = Number(index) || 0;
+  showcase.dataset.activeProject = normalizedIndex;
+
+  showcase.querySelectorAll('[data-project-poster]').forEach((poster) => {
+    poster.classList.toggle('is-active', Number(poster.dataset.index) === normalizedIndex);
+  });
+
+  container.querySelectorAll('.project-card').forEach((card) => {
+    card.classList.toggle('is-active', Number(card.dataset.index) === normalizedIndex);
+  });
+
+  showcase.querySelectorAll('.project-nav-button').forEach((button) => {
+    const isActive = Number(button.dataset.projectTarget) === normalizedIndex;
+    button.classList.toggle('is-active', isActive);
+    if (isActive) {
+      button.setAttribute('aria-current', 'true');
+    } else {
+      button.removeAttribute('aria-current');
+    }
+  });
+
+  updateProjectParallax();
+}
+
+function updateProjectParallax() {
+  const poster = document.querySelector('.project-poster.is-active');
+  const stage = document.querySelector('.project-stage');
+  if (!poster || !stage) return;
+
+  const rect = stage.getBoundingClientRect();
+  const midpoint = window.innerHeight / 2;
+  const distance = midpoint - (rect.top + rect.height / 2);
+  const shift = Math.max(-28, Math.min(28, distance * 0.035));
+  poster.style.setProperty('--poster-shift', `${shift.toFixed(2)}px`);
+}
+
+function getProjectsContainer() {
+  return document.querySelector('#projectsList .project-story-list') || document.getElementById('projectsList');
+}
+
+function syncProfilePhotoSlices() {
+  const photo = document.getElementById('profilePhoto');
+  if (!photo) return;
+
+  document.querySelectorAll('[data-profile-slice]').forEach((slice) => {
+    slice.src = photo.src;
+  });
+}
+
+function formatProjectNumber(index) {
+  return String(Number(index) + 1).padStart(2, '0');
 }
 
 function normalizePhotoUrl(value) {

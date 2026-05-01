@@ -30,21 +30,23 @@ Exemplos:
 - persistência local com `localStorage`
 - exportação e importação de dados em JSON
 - seções preparadas para projetos, habilidades em cards, formação e contato
-- identidade visual escura com acentos em azul, âmbar, verde e lavanda
+- identidade visual clara/editorial com acentos em terracota, azul, verde, dourado e lavanda
 - botões e cards com microinterações de hover
-- cards de projetos com título à direita, CTAs lado a lado no desktop e layout adaptado no mobile
+- hero com foto em recortes/collage
+- seção de projetos com preview visual grande, troca por scroll/clique e cards narrativos
+- CTAs de projetos lado a lado no desktop e layout adaptado no mobile
 - demo temática em `warriors/` linkada a partir do primeiro projeto
 
 ## Estado visual atual
 
 A versão atual prioriza uma apresentação mais autoral e interativa:
 
-- fundo escuro com gradientes suaves e textura discreta
+- fundo claro com textura discreta e composição editorial
 - seção `Skills` acessível diretamente pelo menu
-- botões principais claros com gradiente lavanda/azul e seta animada no hover
+- botões com contraste forte, variação clara e seta animada no hover
 - cards de skills com cores por categoria
-- cards de projetos com melhor hierarquia entre badge, título, descrição, stack e links
-- foto/card do hero com zoom leve e sombra no hover
+- projetos em showcase com poster grande e navegação 01/02/03
+- foto do hero recortada em camadas, com tags de foco profissional
 
 ## Desenvolvimento local
 

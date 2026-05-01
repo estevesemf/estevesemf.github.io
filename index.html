@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfólio de desenvolvedor com foco em frontend, experiência web, projetos autorais e publicação estática.">
+  <meta name="description"
+    content="Portfólio de desenvolvedor com foco em frontend, experiência web, projetos autorais e publicação estática.">
   <title>Portfólio | Desenvolvedor</title>
-  <link rel="stylesheet" href="styles.css?v=20260424-2">
+  <link rel="stylesheet" href="styles.css?v=20260501-1">
 </head>
+
 <body>
   <div class="background-glow background-glow-a" aria-hidden="true"></div>
   <div class="background-glow background-glow-b" aria-hidden="true"></div>
 
-  <button id="editToggleBtn" class="edit-toggle-btn" type="button" aria-controls="editPanel" aria-expanded="false">Modo edição</button>
+  <button id="editToggleBtn" class="edit-toggle-btn" type="button" aria-controls="editPanel" aria-expanded="false">Modo
+    edição</button>
 
   <aside id="editPanel" class="edit-panel" aria-hidden="true">
     <div class="edit-panel-header">
@@ -24,7 +28,8 @@
 
     <div class="edit-panel-content">
       <p class="panel-note">
-        Use este modo apenas localmente. A versão pública abre sem o editor. Para acessar depois, use a URL com <code>?edit=1</code>.
+        Use este modo apenas localmente. A versão pública abre sem o editor. Para acessar depois, use a URL com
+        <code>?edit=1</code>.
       </p>
 
       <fieldset class="edit-section">
@@ -39,11 +44,13 @@
         </label>
         <label>
           Resumo curto
-          <textarea id="formShortBio" rows="4" placeholder="Seu posicionamento profissional em 2 ou 3 linhas"></textarea>
+          <textarea id="formShortBio" rows="4"
+            placeholder="Seu posicionamento profissional em 2 ou 3 linhas"></textarea>
         </label>
         <label>
           Sobre em detalhes
-          <textarea id="formAboutText" rows="6" placeholder="Explique experiência, stack e tipo de problema que você resolve"></textarea>
+          <textarea id="formAboutText" rows="6"
+            placeholder="Explique experiência, stack e tipo de problema que você resolve"></textarea>
         </label>
         <label>
           Local / disponibilidade
@@ -59,15 +66,15 @@
         <legend>Contato</legend>
         <label>
           Email
-          <input type="email" id="formEmail" placeholder="seu@email.com">
+          <input type="email" id="formEmail" placeholder="estevesemf.com">
         </label>
         <label>
           Telefone
-          <input type="tel" id="formPhone" placeholder="+55 (11) 9xxxx-xxxx">
+          <input type="tel" id="formPhone" placeholder="+55 (11) 971368489">
         </label>
         <label>
           GitHub
-          <input type="url" id="formGithub" placeholder="https://github.com/seu-usuario">
+          <input type="url" id="formGithub" placeholder="https://github.com/estevesemf">
         </label>
         <label>
           LinkedIn
@@ -112,21 +119,28 @@
       <section class="hero-copy">
         <p id="profileTag" class="eyebrow editable-field" data-editable>Disponível para oportunidades</p>
         <h1 id="fullName" class="editable-field" data-editable>Esteves Emmanuel</h1>
-        <p id="jobTitle" class="hero-title editable-field" data-editable>Desenvolvedor Fullstack focado em interfaces fortes, apelo visual, experiência web e consistência.</p>
+        <p id="jobTitle" class="hero-title editable-field" data-editable>Desenvolvedor Fullstack focado em interfaces
+          fortes, apelo visual, experiência web e consistência.</p>
         <p id="shortBio" class="hero-summary editable-field" data-editable>
-          Construo aplicações web com foco em impacto visual, organização técnica, integração de dados e clareza para produto. Meu objetivo é transformar ideias em experiências que funcionam bem e também comunicam valor em poucos segundos.
+          Construo aplicações web com foco em impacto visual, organização técnica, integração de dados e clareza para
+          produto. Meu objetivo é transformar ideias em experiências que funcionam bem e também comunicam valor em
+          poucos segundos.
         </p>
 
         <div class="hero-meta">
-          <span id="locationText" class="meta-pill editable-field" data-editable>Brasil | Remoto / Híbrido (Rio de Janeiro)</span>
+          <span id="locationText" class="meta-pill editable-field" data-editable>Brasil | Remoto / Híbrido (Rio de
+            Janeiro)</span>
           <span class="meta-pill">HTML, CSS, JavaScript, Python, PostgreSQL, React</span>
           <span class="meta-pill">Projetos autorais/GitHub Pages/Azure/Vercel, etc.</span>
         </div>
 
         <div class="hero-actions">
-          <a id="heroGithub" class="btn btn-primary hero-link editable-link" data-link-label="Link do GitHub" href="https://github.com/estevesemf" target="_blank" rel="noreferrer">GitHub</a>
-          <a id="heroLinkedin" class="btn btn-ghost hero-link editable-link" data-link-label="Link do LinkedIn" href="https://www.linkedin.com/in/esteves-emmanuel-41048759/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a id="heroResume" class="btn btn-ghost hero-link editable-link" data-link-label="Link do currículo PDF" href="#" target="_blank" rel="noreferrer">Currículo</a>
+          <a id="heroGithub" class="btn btn-primary hero-link editable-link" data-link-label="Link do GitHub"
+            href="https://github.com/estevesemf" target="_blank" rel="noreferrer">GitHub</a>
+          <a id="heroLinkedin" class="btn btn-ghost hero-link editable-link" data-link-label="Link do LinkedIn"
+            href="https://www.linkedin.com/in/esteves-emmanuel-41048759/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a id="heroResume" class="btn btn-ghost hero-link editable-link" data-link-label="Link do currículo PDF"
+            aria-disabled="true">Currículo em breve</a>
         </div>
 
         <div class="hero-stats">
@@ -146,11 +160,23 @@
       </section>
 
       <aside class="hero-card">
-        <img id="profilePhoto" class="profile-photo" src="perfil.jpg" alt="Foto de perfil">
+        <div class="portrait-collage">
+          <img id="profilePhoto" class="profile-photo profile-photo-main" src="perfil.jpg" alt="Foto de perfil">
+          <img class="profile-photo-slice profile-photo-slice-a" data-profile-slice src="perfil.jpg" alt=""
+            aria-hidden="true">
+          <img class="profile-photo-slice profile-photo-slice-b" data-profile-slice src="perfil.jpg" alt=""
+            aria-hidden="true">
+          <div class="collage-note" aria-label="Focos profissionais">
+            <span>Web</span>
+            <span>Dados</span>
+            <span>Deploy</span>
+          </div>
+        </div>
         <div class="hero-card-copy">
           <p class="card-label">Resumo profissional</p>
           <p id="aboutLead" class="editable-field" data-editable>
-            Desenvolvedor com foco em criar interfaces responsivas, integrar APIs, organizar informação e transformar conceitos em produtos web com leitura forte e identidade própria.
+            Desenvolvedor com foco em criar interfaces responsivas, integrar APIs, organizar informação e transformar
+            conceitos em produtos web com leitura forte e identidade própria.
           </p>
         </div>
       </aside>
@@ -165,16 +191,21 @@
       </div>
       <div class="intro-grid">
         <p id="aboutText" class="intro-text editable-field" data-editable>
-          Atuo com desenvolvimento web priorizando clareza visual, código legível e uma experiência que pareça pensada, não genérica. Gosto de trabalhar em projetos que precisam de identidade, boa hierarquia de informação e uma camada frontend capaz de valorizar o produto. Tenho interesse especial em interfaces com narrativa visual forte, dashboards, páginas temáticas e soluções SaaS com foco em usabilidade.
+          Atuo com desenvolvimento web priorizando clareza visual, código legível e uma experiência que pareça pensada,
+          não genérica. Gosto de trabalhar em projetos que precisam de identidade, boa hierarquia de informação e uma
+          camada frontend capaz de valorizar o produto. Tenho interesse especial em interfaces com narrativa visual
+          forte, dashboards, páginas temáticas e soluções SaaS com foco em usabilidade.
         </p>
         <div class="intro-points">
           <article class="info-card">
             <h3>O que posso colocar neste portfólio</h3>
-            <p>Case studies curtos, stack por projeto, desafios técnicos, decisões de interface, resultados esperados e links diretos para repositórios e demos.</p>
+            <p>Case studies curtos, stack por projeto, desafios técnicos, decisões de interface, resultados esperados e
+              links diretos para repositórios e demos.</p>
           </article>
           <article class="info-card">
             <h3>Outras ideias para incluir</h3>
-            <p>Seção de processo, mini roadmap de estudos, stack preferida, experiências com APIs, deploys publicados e um bloco de aprendizado contínuo.</p>
+            <p>Seção de processo, mini roadmap de estudos, stack preferida, experiências com APIs, deploys publicados e
+              um bloco de aprendizado contínuo.</p>
           </article>
         </div>
       </div>
@@ -189,70 +220,154 @@
         <article class="showcase-card accent-neutral">
           <p class="showcase-kicker">Frontend e design</p>
           <h3>Sites bonitos, seguros e com apelo visual forte</h3>
-          <p>Tenho foco em construir sites com identidade visual clara, boa hierarquia, design pensado para causar impacto e uma experiência que passe valor logo no primeiro contato, sem abrir mão de estrutura sólida e segurança.</p>
+          <p>Tenho foco em construir sites com identidade visual clara, boa hierarquia, design pensado para causar
+            impacto e uma experiência que passe valor logo no primeiro contato, sem abrir mão de estrutura sólida e
+            segurança.</p>
         </article>
         <article class="showcase-card accent-gold">
           <p class="showcase-kicker">Dados e dashboards</p>
           <h3>Integração com dados como especialidade de entrega</h3>
-          <p>Trabalho bem com dados em bancos relacionais e não relacionais, de soluções mais diretas com PostgreSQL e MySQL até cenários com DuckDB, ClickHouse e bases NoSQL. Isso ajuda a organizar, consultar e apresentar os dados do cliente com clareza em dashboards, painéis e interfaces operacionais.</p>
+          <p>Trabalho bem com dados em bancos relacionais e não relacionais, de soluções mais diretas com PostgreSQL e
+            MySQL até cenários com DuckDB, ClickHouse e bases NoSQL. Isso ajuda a organizar, consultar e apresentar os
+            dados do cliente com clareza em dashboards, painéis e interfaces operacionais.</p>
         </article>
         <article class="showcase-card accent-green">
           <p class="showcase-kicker">Backend e stack</p>
           <h3>Base forte em linguagens, APIs e deploy</h3>
-          <p>Tenho base em várias linguagens, como C, Java, Python e JavaScript, o que me dá repertório para atuar no backend com integração de APIs, regras de negócio, publicação de serviços e processos de deploy com Docker e outras rotinas de entrega.</p>
+          <p>Tenho base em várias linguagens, como C, Java, Python e JavaScript, o que me dá repertório para atuar no
+            backend com integração de APIs, regras de negócio, publicação de serviços e processos de deploy com Docker e
+            outras rotinas de entrega.</p>
         </article>
       </div>
     </section>
 
-    <section id="projects" class="section">
-      <div class="section-heading">
+    <section id="projects" class="section section-projects">
+      <div class="section-heading project-heading">
         <p class="eyebrow">Projetos em destaque</p>
         <h2>Projetos que comunicam tema, produto e capacidade de frontend</h2>
-        <p class="section-copy">Aqui a ideia é mostrar trabalhos que tenham identidade visual forte e também espaço para conversa técnica sobre arquitetura, UX e publicação.</p>
+        <p class="section-copy">Aqui a ideia é mostrar trabalhos que tenham identidade visual forte e também espaço para
+          conversa técnica sobre arquitetura, UX e publicação.</p>
       </div>
 
-      <div id="projectsList" class="projects-grid">
-        <article class="project-card" data-index="0">
-          <div class="project-top">
-            <span class="project-badge editable-field" data-editable>Projeto temático</span>
-            <h3 class="project-title editable-field" data-editable>Golden State Warriors + Stephen Curry Experience</h3>
-          </div>
-          <p class="project-type editable-field" data-editable>Experiência editorial esportiva</p>
-          <p class="project-description editable-field" data-editable>Site temático dedicado ao universo do Golden State Warriors e à trajetória do Stephen Curry, com foco em narrativa visual, estatísticas, momentos marcantes, identidade esportiva e experiência imersiva para fãs.</p>
-          <p class="project-stack editable-field" data-editable>Frontend responsivo, seções editoriais, animações sutis, dados esportivos, galerias e storytelling visual</p>
-          <div class="project-links">
-            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
-            <a href="warriors/" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
-          </div>
-        </article>
+      <div id="projectsList" class="projects-showcase" data-active-project="0">
+        <div class="project-stage" aria-label="Preview visual dos projetos">
+          <div class="project-frame">
+            <article class="project-poster is-active" data-index="0" data-project-poster>
+              <div class="poster-art" data-variant="court" aria-hidden="true">
+                <span class="poster-crop poster-crop-a"></span>
+                <span class="poster-crop poster-crop-b"></span>
+                <span class="poster-crop poster-crop-c"></span>
+                <span class="poster-line poster-line-a"></span>
+                <span class="poster-line poster-line-b"></span>
+              </div>
+              <div class="poster-caption">
+                <span class="poster-count">01</span>
+                <p class="poster-eyebrow">Projeto temático</p>
+                <h3 class="poster-title">Golden State Warriors + Stephen Curry Experience</h3>
+              </div>
+            </article>
+            <article class="project-poster" data-index="1" data-project-poster>
+              <div class="poster-art" data-variant="agro" aria-hidden="true">
+                <span class="poster-crop poster-crop-a"></span>
+                <span class="poster-crop poster-crop-b"></span>
+                <span class="poster-crop poster-crop-c"></span>
+                <span class="poster-line poster-line-a"></span>
+                <span class="poster-line poster-line-b"></span>
+              </div>
+              <div class="poster-caption">
+                <span class="poster-count">02</span>
+                <p class="poster-eyebrow">Projeto SaaS</p>
+                <h3 class="poster-title">SaaS de Atendimento para Loja de Agronegócio</h3>
+              </div>
+            </article>
+            <article class="project-poster" data-index="2" data-project-poster>
+              <div class="poster-art" data-variant="lab" aria-hidden="true">
+                <span class="poster-crop poster-crop-a"></span>
+                <span class="poster-crop poster-crop-b"></span>
+                <span class="poster-crop poster-crop-c"></span>
+                <span class="poster-line poster-line-a"></span>
+                <span class="poster-line poster-line-b"></span>
+              </div>
+              <div class="poster-caption">
+                <span class="poster-count">03</span>
+                <p class="poster-eyebrow">Próximos destaques</p>
+                <h3 class="poster-title">Outros projetos que podem entrar aqui</h3>
+              </div>
+            </article>
 
-        <article class="project-card" data-index="1">
-          <div class="project-top">
-            <span class="project-badge editable-field" data-editable>Projeto SaaS</span>
-            <h3 class="project-title editable-field" data-editable>SaaS de Atendimento para Loja de Agronegócio</h3>
+            <div class="project-nav" aria-label="Escolher projeto em destaque">
+              <button class="project-nav-button is-active" type="button" data-project-target="0"
+                aria-label="Ir para o projeto 1">01</button>
+              <button class="project-nav-button" type="button" data-project-target="1"
+                aria-label="Ir para o projeto 2">02</button>
+              <button class="project-nav-button" type="button" data-project-target="2"
+                aria-label="Ir para o projeto 3">03</button>
+            </div>
           </div>
-          <p class="project-type editable-field" data-editable>Dashboard operacional</p>
-          <p class="project-description editable-field" data-editable>Simulação de uma plataforma de atendimento para loja do agronegócio, com fluxo de clientes, histórico de pedidos, organização por prioridade, status de chamados e visão operacional de rotina comercial.</p>
-          <p class="project-stack editable-field" data-editable>Dashboard SaaS, tabelas, filtros, cards operacionais, UX para atendimento e gestão visual de processos</p>
-          <div class="project-links">
-            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
-            <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
-          </div>
-        </article>
+        </div>
 
-        <article class="project-card" data-index="2">
-          <div class="project-top">
-            <span class="project-badge editable-field" data-editable>Próximos destaques</span>
-            <h3 class="project-title editable-field" data-editable>Outros projetos que podem entrar aqui</h3>
-          </div>
-          <p class="project-type editable-field" data-editable>Backlog de cases autorais</p>
-          <p class="project-description editable-field" data-editable>Landing pages com identidade visual forte, dashboard com dados reais, clone conceitual com foco em UI, projeto consumindo API pública ou uma página de portfólio para estudo de motion e interação.</p>
-          <p class="project-stack editable-field" data-editable>Cases autorais, estudos de interface, integrações com API e experiências com design mais marcante</p>
-          <div class="project-links">
-            <a href="https://github.com/" target="_blank" rel="noreferrer" class="project-link editable-link" data-link-label="Repositório do projeto">Código no GitHub</a>
-            <a href="#" target="_blank" rel="noreferrer" class="project-link ghost editable-link" data-link-label="Demo do projeto">Ver demo</a>
-          </div>
-        </article>
+        <div class="project-story-list">
+          <article class="project-card is-active" data-index="0" data-project-step>
+            <p class="project-number" aria-hidden="true">01</p>
+            <div class="project-top">
+              <span class="project-badge editable-field" data-editable>Projeto temático</span>
+              <h3 class="project-title editable-field" data-editable>Golden State Warriors + Stephen Curry Experience</h3>
+            </div>
+            <p class="project-type editable-field" data-editable>Experiência editorial esportiva</p>
+            <p class="project-description editable-field" data-editable>Site temático dedicado ao universo do Golden State
+              Warriors e à trajetória do Stephen Curry, com foco em narrativa visual, estatísticas, momentos marcantes,
+              identidade esportiva e experiência imersiva para fãs.</p>
+            <p class="project-stack editable-field" data-editable>Frontend responsivo, seções editoriais, animações sutis,
+              dados esportivos, galerias e storytelling visual</p>
+            <div class="project-links">
+              <a href="https://github.com/estevesemf/estevesemf.github.io" target="_blank" rel="noreferrer"
+                class="project-link editable-link"
+                data-link-label="Repositório do projeto">Código no GitHub</a>
+              <a href="warriors/" target="_blank" rel="noreferrer" class="project-link ghost editable-link"
+                data-link-label="Demo do projeto">Ver demo</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-index="1" data-project-step>
+            <p class="project-number" aria-hidden="true">02</p>
+            <div class="project-top">
+              <span class="project-badge editable-field" data-editable>Projeto SaaS</span>
+              <h3 class="project-title editable-field" data-editable>SaaS de Atendimento para Loja de Agronegócio</h3>
+            </div>
+            <p class="project-type editable-field" data-editable>Dashboard operacional</p>
+            <p class="project-description editable-field" data-editable>Simulação de uma plataforma de atendimento para
+              loja do agronegócio, com fluxo de clientes, histórico de pedidos, organização por prioridade, status de
+              chamados e visão operacional de rotina comercial.</p>
+            <p class="project-stack editable-field" data-editable>Dashboard SaaS, tabelas, filtros, cards operacionais, UX
+              para atendimento e gestão visual de processos</p>
+            <div class="project-links">
+              <a class="project-link editable-link" data-link-label="Repositório do projeto"
+                aria-disabled="true">Código em breve</a>
+              <a class="project-link ghost editable-link" data-link-label="Demo do projeto" aria-disabled="true">Demo em
+                breve</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-index="2" data-project-step>
+            <p class="project-number" aria-hidden="true">03</p>
+            <div class="project-top">
+              <span class="project-badge editable-field" data-editable>Próximos destaques</span>
+              <h3 class="project-title editable-field" data-editable>Outros projetos que podem entrar aqui</h3>
+            </div>
+            <p class="project-type editable-field" data-editable>Backlog de cases autorais</p>
+            <p class="project-description editable-field" data-editable>Landing pages com identidade visual forte,
+              dashboard com dados reais, clone conceitual com foco em UI, projeto consumindo API pública ou uma página de
+              portfólio para estudo de motion e interação.</p>
+            <p class="project-stack editable-field" data-editable>Cases autorais, estudos de interface, integrações com
+              API e experiências com design mais marcante</p>
+            <div class="project-links">
+              <a class="project-link editable-link" data-link-label="Repositório do projeto"
+                aria-disabled="true">Código em breve</a>
+              <a class="project-link ghost editable-link" data-link-label="Demo do projeto" aria-disabled="true">Demo em
+                breve</a>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -267,13 +382,15 @@
           <p class="timeline-period editable-field" data-editable>2020 - 2024</p>
           <h3 class="editable-field" data-editable>Graduação em Engenharia de Software</h3>
           <p class="timeline-place editable-field" data-editable>Universidade XYZ</p>
-          <p class="editable-field" data-editable>Base em arquitetura, desenvolvimento web, banco de dados, resolução de problemas e trabalho em equipe.</p>
+          <p class="timeline-details editable-field" data-editable>Base em arquitetura, desenvolvimento web, banco de
+            dados, resolução de problemas e trabalho em equipe.</p>
         </article>
         <article class="timeline-item" data-index="1">
           <p class="timeline-period editable-field" data-editable>2024</p>
           <h3 class="editable-field" data-editable>Estudos contínuos em Front-End e Interfaces</h3>
           <p class="timeline-place editable-field" data-editable>Formação complementar</p>
-          <p class="editable-field" data-editable>Estudos voltados para componentização, responsividade, boas práticas de UI, narrativa visual e publicação estática.</p>
+          <p class="timeline-details editable-field" data-editable>Estudos voltados para componentização,
+            responsividade, boas práticas de UI, narrativa visual e publicação estática.</p>
         </article>
       </div>
     </section>
@@ -287,25 +404,32 @@
       <div class="contact-card">
         <div class="contact-primary">
           <p class="contact-label">Email</p>
-          <a id="contactEmail" class="contact-value editable-link" data-link-label="Email de contato" href="mailto:seu@email.com">seu@email.com</a>
+          <a id="contactEmail" class="contact-value editable-link" data-link-label="Email de contato"
+            href="mailto:estevesemf@gmail.com">estevesemf@gmail.com</a>
         </div>
         <div class="contact-primary">
           <p class="contact-label">Telefone</p>
-          <a id="contactPhone" class="contact-value editable-link" data-link-label="Telefone de contato" href="tel:+5500000000000">+55 (00) 00000-0000</a>
+          <a id="contactPhone" class="contact-value editable-link" data-link-label="Telefone de contato"
+            href="tel:+5511971368489">+55 (11) 971368489</a>
         </div>
         <div class="contact-actions">
-          <a id="contactGithub" class="btn btn-primary editable-link" data-link-label="Link do GitHub" href="https://github.com/" target="_blank" rel="noreferrer">Perfil no GitHub</a>
-          <a id="contactLinkedin" class="btn btn-ghost editable-link" data-link-label="Link do LinkedIn" href="https://linkedin.com/" target="_blank" rel="noreferrer">Perfil no LinkedIn</a>
-          <a id="contactResume" class="btn btn-ghost editable-link" data-link-label="Link do currículo PDF" href="#" target="_blank" rel="noreferrer">Baixar currículo</a>
+          <a id="contactGithub" class="btn btn-primary editable-link" data-link-label="Link do GitHub"
+            href="https://github.com/estevesemf" target="_blank" rel="noreferrer">Perfil no GitHub</a>
+          <a id="contactLinkedin" class="btn btn-ghost editable-link" data-link-label="Link do LinkedIn"
+            href="https://www.linkedin.com/in/esteves-emmanuel-41048759/" target="_blank" rel="noreferrer">Perfil no LinkedIn</a>
+          <a id="contactResume" class="btn btn-ghost editable-link" data-link-label="Link do currículo PDF"
+            aria-disabled="true">Currículo em breve</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>&copy; <span id="currentYear"></span> <span id="footerName">Seu Nome Aqui</span>. Portfólio publicado em HTML, CSS e JavaScript puro.</p>
+    <p>&copy; <span id="currentYear"></span> <span id="footerName">Seu Nome Aqui</span>. Portfólio publicado em HTML,
+      CSS e JavaScript puro.</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
+
 </html>

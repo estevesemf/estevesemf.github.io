@@ -4,27 +4,28 @@ Este documento é o contexto de manutenção do projeto. Ele existe para você e
 
 ## Estado atual do projeto
 
-O site foi reposicionado para uso em entrevistas.
+Snapshot salvo em 2026-05-01. O site está em uma versão intermediária boa para subir, mas ainda aberta para ajustes finos de design, copy e projetos.
 
 - Visual público mais profissional por padrão
-- Direção visual mais forte, menos genérica e mais autoral
+- Direção visual clara/editorial, menos genérica e mais autoral
 - Modo de edição separado por query string
 - Estrutura preparada para destacar projetos reais do GitHub
 - Compatível com hospedagem estática no GitHub Pages
 - Sem dependências externas e sem build step
 - Navegação principal com âncora direta para `Skills`
-- Paleta escura com acentos em azul, âmbar, verde e lavanda
-- Botões claros com gradiente lavanda/azul e animação de seta no hover
-- Cards de projeto com título alinhado à direita e centralizado dentro do próprio bloco
+- Paleta clara inspirada em portfólios editoriais, com base quente e acentos terracota, azul, verde, dourado e lavanda
+- Hero com foto em recortes/collage, criando uma vibe mais Pinterest/editorial
+- Projetos em formato de showcase visual: imagem grande/sticky no desktop e cards narrativos de cada projeto
 - CTAs dos projetos lado a lado no desktop e empilhados no mobile
+- Links sem URL real aparecem como `em breve`, sem `href="#"`, mas continuam editáveis em `?edit=1`
 
 No estado atual, o site também passou a destacar melhor:
 
 - narrativa visual no hero
 - cards de destaque sobre diferenciais
-- apresentação de projetos com contexto de produto
+- apresentação de projetos com contexto de produto e transição visual
 - espaço para projetos em andamento bem descritos
-- microinterações em botões, pills, cards, foto e links
+- microinterações em botões, pills, cards, foto, links e troca ativa de projeto por scroll/clique
 
 ## Arquitetura resumida
 
@@ -38,7 +39,7 @@ Blocos principais:
 - bloco de estatísticas/resumo rápido
 - seção de apresentação
 - seção `Skills` com cards de diferenciais do portfólio
-- grid de projetos
+- showcase de projetos com preview visual grande, navegação 01/02/03 e cards de conteúdo
 - cards de habilidades e diferenciais
 - formação
 - contato
@@ -50,8 +51,11 @@ Notas do estado atual:
 
 - o menu possui links para `#about`, `#skills`, `#projects` e `#contact`
 - a seção de skills usa `id="skills"` para navegação direta
-- os cards fixos de projeto usam classes compatíveis com o JavaScript: `.project-badge`, `.project-title`, `.project-type`, `.project-description` e `.project-stack`
+- os cards fixos de projeto ficam dentro de `.project-story-list`
+- o preview visual dos projetos usa `.project-stage`, `.project-frame`, `.project-poster` e `.poster-art`
+- os cards de projeto usam classes compatíveis com o JavaScript: `.project-badge`, `.project-title`, `.project-type`, `.project-description` e `.project-stack`
 - os badges dos projetos também são editáveis no modo `?edit=1`
+- a foto do hero usa o mesmo `profilePhoto` principal e fatias sincronizadas via `data-profile-slice`
 
 ### `styles.css`
 
@@ -62,22 +66,23 @@ Responsável por dois cenários no mesmo arquivo:
 
 Pontos relevantes:
 
-- layout principal em cards com fundo translúcido
+- layout principal mais editorial, com seções abertas e cards apenas onde fazem sentido
 - tipografia e composição mais fortes para sair da aparência de template
-- hero com presença maior e blocos de destaque visuais
+- hero com presença maior, foto recortada em camadas e blocos de destaque visuais
 - responsividade sem framework
 - `body.edit-mode` ativa apenas os comportamentos visuais de edição
 - variáveis de cor centralizadas em `:root`
-- botões principais com gradiente claro em lavanda/azul
-- cards de projetos usam grid no cabeçalho para manter badge à esquerda e título à direita
+- botões principais com contraste forte e versão secundária clara
+- seção de projetos usa preview grande no desktop e empilhamento no mobile
 - links dos projetos usam grid com duas colunas no desktop e uma coluna no mobile
 - `prefers-reduced-motion` continua respeitado para reduzir animações
 
 Direção visual atual:
 
-- manter o fundo escuro e sofisticado
-- evitar voltar para um visual monocromático apenas azul/preto
-- preservar os acentos lavanda nos botões claros
+- manter a base clara/editorial
+- evitar voltar para visual monocromático ou para o tema escuro anterior
+- preservar os acentos terracota, azul, verde, dourado e lavanda
+- preservar a lógica de recortes/collage no hero e nos projetos
 - manter hover perceptível, mas sem animações pesadas ou dependências externas
 
 ### `script.js`
@@ -90,6 +95,11 @@ Responsável por:
 - permitir editar links clicando neles no modo de edição
 - criar novos cards de projetos e formação
 - exportar e importar JSON
+- sincronizar os recortes da foto do hero com a foto principal
+- sincronizar os textos dos posters de projeto com os cards editáveis
+- alternar o projeto ativo por `IntersectionObserver` durante o scroll
+- permitir troca de projeto pelos botões 01/02/03
+- aplicar parallax leve no poster ativo dos projetos
 
 ### `warriors/`
 
@@ -167,11 +177,39 @@ Comportamento:
 Atualmente, os projetos principais descritos na home são:
 
 - `Golden State Warriors + Stephen Curry Experience`
-  Projeto temático com storytelling visual, estética esportiva, blocos editoriais e espaço para dados/estatísticas.
+  Projeto temático com storytelling visual, estética esportiva, blocos editoriais e demo em `warriors/`.
 - `SaaS de Atendimento para Loja de Agronegócio`
   Projeto SaaS com foco em painel operacional, organização de atendimento e interface para rotina comercial.
+- `Outros projetos que podem entrar aqui`
+  Espaço de backlog para cases autorais, integrações com API, dashboards ou estudos de interface.
 
 Estes projetos ainda podem estar em desenvolvimento. Mesmo assim, eles já funcionam como direção de portfólio e intenção de produto.
+
+## Snapshot técnico mais recente
+
+Arquivos alterados no snapshot atual:
+
+- `index.html`
+  - hero com collage de foto usando `profile-photo-main` e `profile-photo-slice`
+  - seção de projetos convertida para `projects-showcase`
+  - links placeholder removidos ou convertidos para estado `em breve`
+  - `timeline-details` adicionado aos itens padrão de formação
+- `styles.css`
+  - nova paleta clara/editorial
+  - layout responsivo ajustado para desktop e mobile
+  - recortes com `clip-path` no hero e nos posters de projeto
+  - estados de `aria-disabled` preservados para o modo público e editáveis no modo de edição
+- `script.js`
+  - `initProjectShowcase`, `syncProjectShowcase`, `setActiveProject` e funções auxiliares
+  - `syncProfilePhotoSlices` para manter as fatias da foto sincronizadas
+  - `getEducationData` mais defensivo para itens antigos sem `.timeline-details`
+
+Validações feitas antes deste snapshot:
+
+- `node --check script.js`
+- `git diff --check`
+- screenshots via Chrome headless em desktop e mobile
+- renderização isolada da seção de projetos para conferir o showcase
 
 ## Estrutura de dados exportada
 
