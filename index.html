@@ -7,7 +7,7 @@
   <meta name="description"
     content="Portfólio de desenvolvedor com foco em frontend, experiência web, projetos autorais e publicação estática.">
   <title>Portfólio | Desenvolvedor</title>
-  <link rel="stylesheet" href="styles.css?v=20260501-1">
+  <link rel="stylesheet" href="styles.css?v=20260501-3">
 </head>
 
 <body>
@@ -117,7 +117,6 @@
 
     <div class="hero-grid" id="top">
       <section class="hero-copy">
-        <p id="profileTag" class="eyebrow editable-field" data-editable>Disponível para oportunidades</p>
         <h1 id="fullName" class="editable-field" data-editable>Esteves Emmanuel</h1>
         <p id="jobTitle" class="hero-title editable-field" data-editable>Desenvolvedor Fullstack focado em interfaces
           fortes, apelo visual, experiência web e consistência.</p>
@@ -162,14 +161,33 @@
       <aside class="hero-card">
         <div class="portrait-collage">
           <img id="profilePhoto" class="profile-photo profile-photo-main" src="perfil.jpg" alt="Foto de perfil">
-          <img class="profile-photo-slice profile-photo-slice-a" data-profile-slice src="perfil.jpg" alt=""
-            aria-hidden="true">
-          <img class="profile-photo-slice profile-photo-slice-b" data-profile-slice src="perfil.jpg" alt=""
-            aria-hidden="true">
           <div class="collage-note" aria-label="Focos profissionais">
             <span>Web</span>
             <span>Dados</span>
             <span>Deploy</span>
+          </div>
+        </div>
+        <div class="profile-contact-panel" aria-label="Disponibilidade e contato rápido">
+          <button class="status-badge profile-open-work" type="button" aria-expanded="false"
+            aria-controls="profileContactActions">
+            <span class="status-badge-pulse" aria-hidden="true">
+              <span class="status-badge-ping"></span>
+              <span class="status-badge-dot"></span>
+            </span>
+            <span class="status-badge-content">
+              <span class="status-badge-label">Open to Work</span>
+              <span id="profileTag" class="status-badge-sub editable-field" data-editable>Disponível para oportunidades</span>
+            </span>
+          </button>
+          <div id="profileContactActions" class="profile-contact-actions" aria-hidden="true">
+            <a id="profileEmail" class="profile-contact-link" href="mailto:estevesemf@gmail.com" tabindex="-1">
+              <span>Email</span>
+              <strong>estevesemf@gmail.com</strong>
+            </a>
+            <a id="profilePhone" class="profile-contact-link" href="tel:+5511971368489" tabindex="-1">
+              <span>Telefone</span>
+              <strong>+55 (11) 971368489</strong>
+            </a>
           </div>
         </div>
         <div class="hero-card-copy">
@@ -429,7 +447,7 @@
       CSS e JavaScript puro.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260501-4"></script>
 </body>
 
 </html>

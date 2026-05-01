@@ -32,7 +32,7 @@ Exemplos:
 - seções preparadas para projetos, habilidades em cards, formação e contato
 - identidade visual clara/editorial com acentos em terracota, azul, verde, dourado e lavanda
 - botões e cards com microinterações de hover
-- hero com foto em recortes/collage
+- hero com foto principal recortada e box de tags profissionais
 - seção de projetos com preview visual grande, troca por scroll/clique e cards narrativos
 - CTAs de projetos lado a lado no desktop e layout adaptado no mobile
 - demo temática em `warriors/` linkada a partir do primeiro projeto
@@ -46,7 +46,7 @@ A versão atual prioriza uma apresentação mais autoral e interativa:
 - botões com contraste forte, variação clara e seta animada no hover
 - cards de skills com cores por categoria
 - projetos em showcase com poster grande e navegação 01/02/03
-- foto do hero recortada em camadas, com tags de foco profissional
+- foto do hero recortada, com tags de foco profissional
 
 ## Desenvolvimento local
 

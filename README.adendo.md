@@ -14,7 +14,7 @@ Snapshot salvo em 2026-05-01. O site está em uma versão intermediária boa par
 - Sem dependências externas e sem build step
 - Navegação principal com âncora direta para `Skills`
 - Paleta clara inspirada em portfólios editoriais, com base quente e acentos terracota, azul, verde, dourado e lavanda
-- Hero com foto em recortes/collage, criando uma vibe mais Pinterest/editorial
+- Hero com foto principal recortada e box de tags `Web`, `Dados` e `Deploy`
 - Projetos em formato de showcase visual: imagem grande/sticky no desktop e cards narrativos de cada projeto
 - CTAs dos projetos lado a lado no desktop e empilhados no mobile
 - Links sem URL real aparecem como `em breve`, sem `href="#"`, mas continuam editáveis em `?edit=1`
@@ -55,7 +55,7 @@ Notas do estado atual:
 - o preview visual dos projetos usa `.project-stage`, `.project-frame`, `.project-poster` e `.poster-art`
 - os cards de projeto usam classes compatíveis com o JavaScript: `.project-badge`, `.project-title`, `.project-type`, `.project-description` e `.project-stack`
 - os badges dos projetos também são editáveis no modo `?edit=1`
-- a foto do hero usa o mesmo `profilePhoto` principal e fatias sincronizadas via `data-profile-slice`
+- a foto do hero usa `profilePhoto` como imagem principal, sem miniaturas duplicadas
 
 ### `styles.css`
 
@@ -68,7 +68,7 @@ Pontos relevantes:
 
 - layout principal mais editorial, com seções abertas e cards apenas onde fazem sentido
 - tipografia e composição mais fortes para sair da aparência de template
-- hero com presença maior, foto recortada em camadas e blocos de destaque visuais
+- hero com presença maior, foto principal recortada e box de tags profissionais
 - responsividade sem framework
 - `body.edit-mode` ativa apenas os comportamentos visuais de edição
 - variáveis de cor centralizadas em `:root`
@@ -82,7 +82,7 @@ Direção visual atual:
 - manter a base clara/editorial
 - evitar voltar para visual monocromático ou para o tema escuro anterior
 - preservar os acentos terracota, azul, verde, dourado e lavanda
-- preservar a lógica de recortes/collage no hero e nos projetos
+- preservar a lógica de recortes no hero e nos projetos
 - manter hover perceptível, mas sem animações pesadas ou dependências externas
 
 ### `script.js`
@@ -95,7 +95,6 @@ Responsável por:
 - permitir editar links clicando neles no modo de edição
 - criar novos cards de projetos e formação
 - exportar e importar JSON
-- sincronizar os recortes da foto do hero com a foto principal
 - sincronizar os textos dos posters de projeto com os cards editáveis
 - alternar o projeto ativo por `IntersectionObserver` durante o scroll
 - permitir troca de projeto pelos botões 01/02/03
@@ -190,7 +189,7 @@ Estes projetos ainda podem estar em desenvolvimento. Mesmo assim, eles já funci
 Arquivos alterados no snapshot atual:
 
 - `index.html`
-  - hero com collage de foto usando `profile-photo-main` e `profile-photo-slice`
+  - hero com foto única usando `profile-photo-main` e box `Web/Dados/Deploy`
   - seção de projetos convertida para `projects-showcase`
   - links placeholder removidos ou convertidos para estado `em breve`
   - `timeline-details` adicionado aos itens padrão de formação
@@ -201,7 +200,6 @@ Arquivos alterados no snapshot atual:
   - estados de `aria-disabled` preservados para o modo público e editáveis no modo de edição
 - `script.js`
   - `initProjectShowcase`, `syncProjectShowcase`, `setActiveProject` e funções auxiliares
-  - `syncProfilePhotoSlices` para manter as fatias da foto sincronizadas
   - `getEducationData` mais defensivo para itens antigos sem `.timeline-details`
 
 Validações feitas antes deste snapshot:

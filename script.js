@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('currentYear').textContent = new Date().getFullYear();
 
   loadFromStorage();
-  syncProfilePhotoSlices();
   syncDerivedFields();
 
   if (EDIT_MODE) {
@@ -25,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initScrollReveal();
   initProjectShowcase();
+  setupProfileOpenWorkButton();
 });
 
 function loadFromStorage() {
@@ -49,7 +49,6 @@ function applyDataToPage(data) {
   setText('profileTag', data.profileTag);
 
   document.getElementById('profilePhoto').src = normalizePhotoUrl(data.photoUrl);
-  syncProfilePhotoSlices();
 
   applyContactData(data.contact || {});
 
@@ -227,7 +226,6 @@ function setupFormBindings() {
     formPhotoUrl: (value) => {
       if (value) {
         document.getElementById('profilePhoto').src = value;
-        syncProfilePhotoSlices();
       }
     },
     formEmail: (value) => {
@@ -461,6 +459,78 @@ function syncDerivedFields() {
   const fullName = getText('fullName') || 'Seu Nome Aqui';
   document.title = `${fullName} | Portfólio`;
   document.getElementById('footerName').textContent = fullName;
+  syncProfileContactLinks();
+}
+
+function syncProfileContactLinks() {
+  syncProfileContactLink('contactEmail', 'profileEmail', 'Email em breve');
+  syncProfileContactLink('contactPhone', 'profilePhone', 'Telefone em breve');
+}
+
+function syncProfileContactLink(sourceId, targetId, fallbackText) {
+  const source = document.getElementById(sourceId);
+  const target = document.getElementById(targetId);
+  if (!source || !target) return;
+
+  const href = source.getAttribute('href') || '';
+  const value = source.textContent.trim() || fallbackText;
+  const text = target.querySelector('strong');
+
+  if (text) {
+    text.textContent = value;
+  }
+
+  if (href && href !== '#') {
+    target.setAttribute('href', href);
+    target.removeAttribute('aria-disabled');
+    syncProfileContactLinkTabIndex(target);
+    return;
+  }
+
+  target.removeAttribute('href');
+  target.setAttribute('aria-disabled', 'true');
+  syncProfileContactLinkTabIndex(target);
+}
+
+function syncProfileContactLinkTabIndex(link) {
+  const panel = document.getElementById('profileContactActions');
+  const isOpen = panel && panel.classList.contains('is-open');
+  const canFocus = isOpen && link.hasAttribute('href') && link.getAttribute('aria-disabled') !== 'true';
+  link.tabIndex = canFocus ? 0 : -1;
+}
+
+function setupProfileOpenWorkButton() {
+  const button = document.querySelector('.profile-open-work');
+  const panel = document.getElementById('profileContactActions');
+  if (!button || !panel) return;
+
+  const setOpen = (isOpen) => {
+    button.setAttribute('aria-expanded', String(isOpen));
+    panel.classList.toggle('is-open', isOpen);
+    panel.setAttribute('aria-hidden', String(!isOpen));
+    panel.querySelectorAll('a').forEach((link) => {
+      syncProfileContactLinkTabIndex(link);
+    });
+  };
+
+  setOpen(false);
+
+  button.addEventListener('click', (event) => {
+    if (EDIT_MODE && event.target.closest('[contenteditable="true"]')) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    setOpen(button.getAttribute('aria-expanded') !== 'true');
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      button.focus();
+    }
+  });
 }
 
 function setText(id, value) {
@@ -579,7 +649,10 @@ function initProjectShowcase() {
 
       const target = getProjectsContainer().querySelector(`.project-card[data-index="${button.dataset.projectTarget}"]`);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const rect = target.getBoundingClientRect();
+        const targetY = rect.top + window.scrollY + (rect.height - window.innerHeight) / 2;
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: Math.max(0, Math.min(targetY, maxY)), behavior: 'smooth' });
       }
       setActiveProject(button.dataset.projectTarget);
     });
@@ -792,15 +865,6 @@ function updateProjectParallax() {
 
 function getProjectsContainer() {
   return document.querySelector('#projectsList .project-story-list') || document.getElementById('projectsList');
-}
-
-function syncProfilePhotoSlices() {
-  const photo = document.getElementById('profilePhoto');
-  if (!photo) return;
-
-  document.querySelectorAll('[data-profile-slice]').forEach((slice) => {
-    slice.src = photo.src;
-  });
 }
 
 function formatProjectNumber(index) {
