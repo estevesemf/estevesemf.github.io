@@ -714,7 +714,18 @@ img {
 .section {
   position: relative;
   padding: 4.4rem 0;
-  border-top: 1px solid var(--divider);
+  border-top: 0;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(35, 44, 46, 0.34) 0%, rgba(35, 44, 46, 0.16) 60%, rgba(35, 44, 46, 0.06) 100%);
 }
 
 .section-heading {
@@ -891,6 +902,8 @@ img {
 }
 
 .projects-showcase {
+  --project-viewport-height: 100vh;
+  --project-frame-height: min(780px, calc(var(--project-viewport-height) - 4rem));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
   gap: 2rem;
@@ -899,8 +912,8 @@ img {
 
 .project-stage {
   position: sticky;
-  top: 1rem;
-  min-height: calc(100vh - 2rem);
+  top: calc((var(--project-viewport-height) - var(--project-frame-height)) / 2);
+  min-height: 0;
   display: flex;
   align-items: flex-start;
 }
@@ -908,9 +921,14 @@ img {
 .project-frame {
   position: relative;
   width: 100%;
-  min-height: 540px;
-  height: calc(100vh - 4rem);
-  max-height: 780px;
+  min-height: 0;
+  height: var(--project-frame-height);
+}
+
+@supports (height: 100svh) {
+  .projects-showcase {
+    --project-viewport-height: 100svh;
+  }
 }
 
 .project-poster {
@@ -1144,6 +1162,8 @@ img {
 .project-story-list {
   display: grid;
   gap: 2rem;
+  /* Keep the first and last cards centered when selected. */
+  padding-block: max(0px, calc((var(--project-frame-height) - 72vh) / 2));
 }
 
 .project-card {
@@ -1262,6 +1282,10 @@ img {
   transform: none;
   box-shadow: none;
   border-color: var(--divider);
+}
+
+.timeline-item:last-child {
+  border-bottom: 0;
 }
 
 .timeline-item .timeline-period {
@@ -1487,6 +1511,111 @@ body.edit-mode .editable-field[data-editable="true"]:focus {
   transform: translateY(0);
 }
 
+/* Paleta por projeto (opção "recomendada", escolhida em 06/11/2026). */
+.project-card[data-variant="court"],
+.project-poster:has(.poster-art[data-variant="court"]) {
+  --p-canvas: #142a4c; --p-ink: #0e1e36; --p-surface: #f6f8fc; --p-accent: #1f4e8c; --p-accent-soft: #dde7f6;
+}
+
+.project-card[data-variant="culture"],
+.project-poster:has(.poster-art[data-variant="culture"]) {
+  --p-canvas: #3a2a1f; --p-ink: #2b1f17; --p-surface: #fbf6ef; --p-accent: #8a4b24; --p-accent-soft: #f2e4d3;
+}
+
+.project-card[data-variant="agro"],
+.project-poster:has(.poster-art[data-variant="agro"]) {
+  --p-canvas: #132e26; --p-ink: #10261f; --p-surface: #f4f9f5; --p-accent: #25775e; --p-accent-soft: #e4f2e8;
+}
+
+.project-card[data-variant="lab"],
+.project-poster:has(.poster-art[data-variant="lab"]) {
+  --p-canvas: #2b2238; --p-ink: #221b2d; --p-surface: #f8f5fb; --p-accent: #6a4c93; --p-accent-soft: #ece4f6;
+}
+
+.project-poster:has(.poster-art[data-variant]) {
+  background: var(--p-canvas);
+  border-color: color-mix(in srgb, var(--p-canvas) 70%, #000);
+}
+
+.project-poster .poster-art.has-preview[data-variant] {
+  background: var(--p-canvas);
+}
+
+.project-poster:has(.poster-art[data-variant]) .poster-caption {
+  background: color-mix(in srgb, var(--p-ink) 92%, transparent);
+}
+
+.project-poster:has(.poster-art[data-variant]) .poster-count {
+  color: var(--p-ink);
+}
+
+.project-card[data-variant] {
+  background: color-mix(in srgb, var(--p-surface) 72%, transparent);
+}
+
+.project-card[data-variant].is-active {
+  background: var(--p-surface);
+  border-color: color-mix(in srgb, var(--p-accent) 32%, transparent);
+}
+
+.project-card[data-variant]::before {
+  background: var(--p-accent);
+}
+
+.project-card[data-variant] .project-number {
+  color: var(--p-accent);
+}
+
+.project-card[data-variant] .project-title {
+  color: var(--p-ink);
+}
+
+.project-card[data-variant] .project-badge {
+  background: var(--p-accent-soft);
+  border-color: color-mix(in srgb, var(--p-accent) 28%, transparent);
+  color: var(--p-accent);
+}
+
+/* Botões iguais em todos os projetos: primeiro escuro, segundo claro. */
+.project-card[data-variant] .project-link,
+.project-card[data-variant] .project-link[aria-disabled="true"] {
+  opacity: 1;
+  background: var(--p-accent);
+  border-color: var(--p-accent);
+  color: #fff;
+}
+
+.project-card[data-variant] .project-link:not([aria-disabled="true"]):hover {
+  background: var(--p-ink);
+  border-color: var(--p-ink);
+}
+
+.project-card[data-variant] .project-link.ghost,
+.project-card[data-variant] .project-link.ghost[aria-disabled="true"] {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: color-mix(in srgb, var(--p-accent) 35%, transparent);
+  color: var(--p-ink);
+}
+
+.project-card[data-variant] .project-link.ghost:not([aria-disabled="true"]):hover {
+  background: var(--p-accent-soft);
+  border-color: var(--p-accent);
+}
+
+@media (min-width: 981px) and (max-height: 720px) {
+  .project-poster .poster-art.has-preview {
+    padding: 3.5rem 1rem 9rem;
+  }
+
+  .poster-count {
+    display: none;
+  }
+
+  .poster-title {
+    font-size: 1.9rem;
+  }
+}
+
 @media (max-width: 980px) {
   .hero-grid,
   .intro-grid,
@@ -1522,6 +1651,10 @@ body.edit-mode .editable-field[data-editable="true"]:focus {
 
   .project-card {
     min-height: auto;
+  }
+
+  .project-story-list {
+    padding-block: 0;
   }
 
   .contact-actions {
