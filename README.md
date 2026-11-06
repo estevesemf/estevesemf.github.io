@@ -12,7 +12,7 @@ HTML, CSS e JavaScript puros — sem framework, sem bundler, sem etapa de build.
 - **Modo de edição sem backend**: abrir `?edit=1` torna o conteúdo editável na
   própria página, com persistência em `localStorage` (chave `portfolio_v2`) e
   exportação/importação do conteúdo em JSON
-- Deploy direto do repositório, sem pipeline
+- Publicação estática pelo GitHub Actions, sem etapa de compilação
 
 ## Rodar localmente
 
@@ -30,6 +30,7 @@ index.html          estrutura da página e conteúdo inicial
 styles.css          identidade visual, responsividade e estilos do modo de edição
 script.js           modo de edição, localStorage, import/export JSON e showcase de projetos
 README.adendo.md    contexto de manutenção: arquitetura detalhada e direção visual
+.github/workflows/pages.yml  publicação dos arquivos públicos no Pages
 ```
 
 O Warriors é um repositório separado (`estevesemf/warriors-curry-impact`),
@@ -48,8 +49,10 @@ As capturas dos projetos ficam em `assets/img/projetos/`.
 Januária tem endereço próprio; Warriors aponta para a aplicação publicada
 na Vercel com banco no Neon. Agendamento e Agrostore ainda não têm
 demonstração pública confirmada. Repositórios privados estão identificados como
-tal, e o currículo em PDF continua pendente. A publicação usa a branch `main`
-e a pasta raiz do repositório.
+tal, e o currículo em PDF continua pendente. O workflow publica os arquivos do
+site a cada push para `main`, com a origem do Pages configurada como GitHub
+Actions. HTML, CSS, JavaScript e imagens são copiados para `_site/`, sem Jekyll.
+Arquivos de contexto e documentação não entram no artefato publicado.
 
 A formação distingue graduação em curso de estudos em andamento: fullstack,
 containers, dados, SQL e Segurança da Informação. A nomenclatura

@@ -140,7 +140,12 @@ Consequência importante:
 
 1. Commitar alterações do repositório.
 2. Enviar para o GitHub.
-3. Publicar via GitHub Pages.
+3. Acompanhar `.github/workflows/pages.yml` no GitHub Actions.
+
+O Pages usa origem GitHub Actions e mantém o domínio configurado no repositório.
+O workflow publica somente HTML, CSS, JavaScript, foto e previews WebP, sem
+Jekyll. As actions oficiais estão fixadas por SHA e as permissões de publicação
+ficam no job de deploy. Não inclua os contextos locais no artefato público.
 
 ## Como editar links
 
