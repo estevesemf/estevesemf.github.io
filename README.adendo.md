@@ -4,7 +4,11 @@ Este documento é o contexto de manutenção do projeto. Ele existe para você e
 
 ## Estado atual do projeto
 
-Snapshot salvo em 2026-05-01. O site está em uma versão intermediária boa para subir, mas ainda aberta para ajustes finos de design, copy e projetos.
+Atualizado em 06/11/2026. O estado de implementação e publicação está em
+`ESTADO.md` (contexto local, não publicado). O snapshot visual de maio continua como base; os projetos
+foram atualizados a partir da conversa do usuário com Claude em 05/11 e do
+pedido detalhado de 06/11. Sobre, skills e formação usam vistoria documental e
+relato humano; a mesa completa e a revisão visual final estão referenciadas no estado.
 
 - Visual público mais profissional por padrão
 - Direção visual clara/editorial, menos genérica e mais autoral
@@ -38,6 +42,7 @@ Blocos principais:
 - hero com nome, posicionamento, resumo e CTAs
 - bloco de estatísticas/resumo rápido
 - seção de apresentação
+  com título simples, texto editável e nota aberta sobre método
 - seção `Skills` com cards de diferenciais do portfólio
 - showcase de projetos com preview visual grande, navegação 01/02/03 e cards de conteúdo
 - cards de habilidades e diferenciais
@@ -100,20 +105,6 @@ Responsável por:
 - permitir troca de projeto pelos botões 01/02/03
 - aplicar parallax leve no poster ativo dos projetos
 
-### `warriors/`
-
-Demo estática linkada pelo projeto `Golden State Warriors + Stephen Curry Experience`.
-
-Arquivos:
-
-- `warriors/index.html`: página editorial temática em inglês
-- `warriors/styles.css`: visual próprio da demo, independente do CSS principal
-- `warriors/script.js`: ano automático, reveal on scroll e interação dos cards de momentos
-
-Ponto de atenção:
-
-- a demo usa fontes do Google Fonts e imagens externas do Unsplash; se a intenção for manter o portfólio 100% offline, esses assets devem ser trazidos para `assets/`.
-
 ## Fonte de verdade dos dados
 
 Durante a edição, a fonte de verdade prática é o DOM, que depois é serializado para `localStorage`.
@@ -173,16 +164,19 @@ Comportamento:
 
 ## Projetos destacados no momento
 
-Atualmente, os projetos principais descritos na home são:
+Ordem atual:
 
-- `Golden State Warriors + Stephen Curry Experience`
-  Projeto temático com storytelling visual, estética esportiva, blocos editoriais e demo em `warriors/`.
-- `SaaS de Atendimento para Loja de Agronegócio`
-  Projeto SaaS com foco em painel operacional, organização de atendimento e interface para rotina comercial.
-- `Outros projetos que podem entrar aqui`
-  Espaço de backlog para cases autorais, integrações com API, dashboards ou estudos de interface.
+1. `Warriors · The Curry Effect`: aplicação de data storytelling com PHP,
+   PostgreSQL e ECharts; links para o repositório e a aplicação publicada.
+2. `Travessias de Januária`: site cultural com PHP, SQLite e painel de conteúdo.
+3. `Agrostore`: SaaS multi-tenant para lojas agropecuárias; demo pública em preparação.
+4. `Agendamento`: Next.js, TypeScript e Convex; demo pública em preparação.
 
-Estes projetos ainda podem estar em desenvolvimento. Mesmo assim, eles já funcionam como direção de portfólio e intenção de produto.
+A ordem anterior foi reavaliada por autorização do usuário em 06/11/2026.
+Warriors abre por unir dados, interface, aplicação e código públicos. Os projetos
+são identificados como desenvolvidos com assistência de IA.
+Screenshots e rótulos dos links são preservados no JSON por campos opcionais;
+importações antigas continuam aceitas e não ganham imagens de outro projeto.
 
 ## Snapshot técnico mais recente
 

@@ -1,72 +1,59 @@
-# Portfólio Profissional
+# Portfólio pessoal
 
-Portfólio pessoal desenvolvido em HTML, CSS e JavaScript puro, publicado via GitHub Pages. O objetivo do projeto é apresentar perfil profissional, projetos em destaque e capacidade de construir interfaces web com identidade visual forte e manutenção simples.
+Portfólio pessoal em <https://estevesmelo.me>, hospedado pelo GitHub Pages.
+Apresenta perfil, skills, projetos em destaque e contato numa página única, em
+HTML, CSS e JavaScript puros — sem framework, sem bundler, sem etapa de build.
 
-## Visão geral
+## O que demonstra tecnicamente
 
-O site funciona em dois modos:
+- Layout editorial responsivo escrito à mão, sem framework de CSS
+- Showcase de projetos com troca por scroll e clique (`IntersectionObserver`),
+  parallax leve e microinterações que respeitam `prefers-reduced-motion`
+- **Modo de edição sem backend**: abrir `?edit=1` torna o conteúdo editável na
+  própria página, com persistência em `localStorage` (chave `portfolio_v2`) e
+  exportação/importação do conteúdo em JSON
+- Deploy direto do repositório, sem pipeline
 
-- `modo público`: versão principal, pensada para recrutadores, clientes e entrevistas
-- `modo edição`: acessado com `?edit=1`, habilita edição inline, painel lateral e exportação/importação em JSON
-
-Exemplos:
-
-- público: `https://seu-usuario.github.io/repositorio/`
-- edição: `https://seu-usuario.github.io/repositorio/?edit=1`
-
-## Estrutura do projeto
-
-- `index.html`: estrutura da página e conteúdo inicial
-- `styles.css`: identidade visual, responsividade e estilos do modo de edição
-- `script.js`: lógica de edição, persistência em `localStorage` e sincronização do conteúdo
-- `warriors/`: demo temática do projeto Golden State Warriors + Stephen Curry Experience
-- `README.adendo.md`: contexto operacional para manutenção futura
-
-## Recursos atuais
-
-- layout estático compatível com GitHub Pages
-- navegação por âncoras para Sobre, Skills, Projetos e Contato
-- modo de edição sem backend
-- persistência local com `localStorage`
-- exportação e importação de dados em JSON
-- seções preparadas para projetos, habilidades em cards, formação e contato
-- identidade visual clara/editorial com acentos em terracota, azul, verde, dourado e lavanda
-- botões e cards com microinterações de hover
-- hero com foto principal recortada e box de tags profissionais
-- seção de projetos com preview visual grande, troca por scroll/clique e cards narrativos
-- CTAs de projetos lado a lado no desktop e layout adaptado no mobile
-- demo temática em `warriors/` linkada a partir do primeiro projeto
-
-## Estado visual atual
-
-A versão atual prioriza uma apresentação mais autoral e interativa:
-
-- fundo claro com textura discreta e composição editorial
-- seção `Skills` acessível diretamente pelo menu
-- botões com contraste forte, variação clara e seta animada no hover
-- cards de skills com cores por categoria
-- projetos em showcase com poster grande e navegação 01/02/03
-- foto do hero recortada, com tags de foco profissional
-
-## Desenvolvimento local
-
-Execute um servidor estático:
+## Rodar localmente
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Depois acesse:
+- `http://localhost:8000/` — versão pública
+- `http://localhost:8000/?edit=1` — modo de edição
 
-- `http://localhost:8000/` para revisar a versão pública
-- `http://localhost:8000/?edit=1` para editar conteúdo localmente
+## Estrutura
 
-## Publicação
+```txt
+index.html          estrutura da página e conteúdo inicial
+styles.css          identidade visual, responsividade e estilos do modo de edição
+script.js           modo de edição, localStorage, import/export JSON e showcase de projetos
+README.adendo.md    contexto de manutenção: arquitetura detalhada e direção visual
+```
 
-Como o projeto é estático, basta versionar os arquivos da raiz e publicar pelo GitHub Pages. Em `Settings > Pages`, selecione a branch principal e a pasta raiz do repositório.
+O Warriors é um repositório separado (`estevesemf/warriors-curry-impact`),
+publicado em https://warriors-two.vercel.app; a antiga demo estática `warriors/`
+foi removida em 06/11/2026.
 
-## Observações
+## Estado
 
-- os dados editados localmente usam a chave `portfolio_v2`
-- mudanças feitas em `?edit=1` não substituem o versionamento do repositório
-- revise a versão pública antes de publicar para evitar placeholders, links quebrados ou conteúdo incompleto
+Atualização local de 06/11/2026: Sobre, skills e formação revisados com fontes
+locais e relato do usuário. Após autorização para reavaliar a ordem e uma mesa
+completa, os projetos ficaram: Warriors, Travessias de Januária, Agrostore e
+Agendamento. A apresentação preserva a direção editorial e os títulos à esquerda.
+O resumo técnico e as pendências ficam em `ESTADO.md`, contexto local não publicado.
+As capturas dos projetos ficam em `assets/img/projetos/`.
+
+Januária tem endereço próprio; Warriors aponta para a aplicação publicada
+na Vercel com banco no Neon. Agendamento e Agrostore ainda não têm
+demonstração pública confirmada. Repositórios privados estão identificados como
+tal, e o currículo em PDF continua pendente. A publicação usa a branch `main`
+e a pasta raiz do repositório.
+
+A formação distingue graduação em curso de estudos em andamento: fullstack,
+containers, dados, SQL e Segurança da Informação. A nomenclatura
+[Master.dev](https://master.dev/) e o curso
+[Complete Intro to Containers v2](https://master.dev/courses/complete-intro-containers-v2/)
+foram conferidos nas fontes oficiais; isso não comprova conclusão pelo usuário.
+Swarm aparece como aprofundamento, não como cluster implantado.

@@ -132,6 +132,10 @@ function getProjectsData() {
     stack: item.querySelector('.project-stack').textContent.trim(),
     github: item.querySelector('.project-link').getAttribute('href') || '',
     live: item.querySelector('.project-link.ghost').getAttribute('href') || '',
+    preview: item.dataset.preview || '',
+    variant: item.dataset.variant || '',
+    githubUnavailableLabel: item.querySelector('.project-link').dataset.unavailableLabel || '',
+    liveLabel: item.querySelector('.project-link.ghost').textContent.trim(),
   }));
 }
 
@@ -361,6 +365,8 @@ function createProjectCard(project, index) {
   article.className = 'project-card';
   article.dataset.index = index;
   article.setAttribute('data-project-step', '');
+  article.dataset.preview = project.preview || '';
+  article.dataset.variant = project.variant || '';
 
   const number = document.createElement('p');
   number.className = 'project-number';
@@ -380,6 +386,12 @@ function createProjectCard(project, index) {
     createProjectLink(project.github || '', 'Código no GitHub', 'Repositório do projeto'),
     createProjectLink(project.live || '', 'Ver demo', 'Demo do projeto', true),
   );
+  const codeLink = links.firstElementChild;
+  codeLink.dataset.unavailableLabel = project.githubUnavailableLabel || '';
+  codeLink.textContent = getProjectLinkText(codeLink, project.github || '');
+  if (project.live && project.liveLabel) {
+    links.lastElementChild.textContent = project.liveLabel;
+  }
 
   article.append(
     number,
@@ -577,7 +589,7 @@ function getProjectLinkText(link, href) {
   if (link.classList.contains('ghost')) {
     return hasHref ? 'Ver demo' : 'Demo em breve';
   }
-  return hasHref ? 'Código no GitHub' : 'Código em breve';
+  return hasHref ? 'Código no GitHub' : (link.dataset.unavailableLabel || 'Código em breve');
 }
 
 function syncRelatedContactLinks(id, href) {
@@ -652,7 +664,10 @@ function initProjectShowcase() {
         const rect = target.getBoundingClientRect();
         const targetY = rect.top + window.scrollY + (rect.height - window.innerHeight) / 2;
         const maxY = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo({ top: Math.max(0, Math.min(targetY, maxY)), behavior: 'smooth' });
+        window.scrollTo({
+          top: Math.max(0, Math.min(targetY, maxY)),
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        });
       }
       setActiveProject(button.dataset.projectTarget);
     });
@@ -739,6 +754,23 @@ function syncProjectPoster(card, poster, index) {
   poster.querySelector('.poster-count').textContent = formatProjectNumber(index);
   poster.querySelector('.poster-eyebrow').textContent = badge;
   poster.querySelector('.poster-title').textContent = title;
+  const art = poster.querySelector('.poster-art');
+  art.dataset.variant = card.dataset.variant || ['court', 'agro', 'lab'][index % 3];
+  const preview = card.dataset.preview || '';
+  let image = art.querySelector('.poster-preview');
+  if (preview) {
+    if (!image) {
+      image = document.createElement('img');
+      image.className = 'poster-preview';
+      image.alt = '';
+      image.loading = index === 0 ? 'eager' : 'lazy';
+      art.prepend(image);
+    }
+    image.setAttribute('src', preview);
+  } else if (image) {
+    image.remove();
+  }
+  art.classList.toggle('has-preview', Boolean(preview));
 }
 
 function createProjectPoster(index) {
@@ -829,9 +861,12 @@ function setActiveProject(index) {
 
   const normalizedIndex = Number(index) || 0;
   showcase.dataset.activeProject = normalizedIndex;
+  const count = document.getElementById('projectCount');
+  if (count) count.textContent = container.querySelectorAll('.project-card').length;
 
   showcase.querySelectorAll('[data-project-poster]').forEach((poster) => {
     poster.classList.toggle('is-active', Number(poster.dataset.index) === normalizedIndex);
+    poster.setAttribute('aria-hidden', String(Number(poster.dataset.index) !== normalizedIndex));
   });
 
   container.querySelectorAll('.project-card').forEach((card) => {
